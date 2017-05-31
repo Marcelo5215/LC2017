@@ -1,0 +1,134 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% Grupo de Teoria da Computacao, Universidade de Brasilia
+%%% M. Ayala-Rincon
+%%% Last modification:  May 2, 2017
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% PROPOSED AS SHORT COURSE PROJET FIRST SEMESTER 2017
+%%%%% Computational Logic - M.Ayala-Rincon F.L.C. de Moura
+%%%%%
+%%%%% In the sequel insertion sort on sequences is specified
+%%%%% as the recursive function "fs_insertion_sort" and
+%%%%% should be proved correct:  it receives as input a 
+%%%%% finite sequence of naturals and gives as output a
+%%%%% sorted sequence of naturals which is a "permutation"
+%%%%% of the input sequence.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+binsertionsort: THEORY
+
+BEGIN
+
+	IMPORTING sorting_seq
+	s,s1,s2 : VAR finseq[nat]
+	x: VAR nat
+
+%%%%% This function correctly inserts an element in a non decreasing 
+%%%%% sorted list.
+%%%%% It looks for the right position recursively.
+insertion (x, s): RECURSIVE finseq[nat] =
+	IF length(s) = 0 THEN add_first(x,s)
+	ELSIF x<= first(s) THEN add_first(x,s) 
+	ELSE add_first(first(s), insertion(x,rest(s)))
+ENDIF
+MEASURE length(s)
+
+length_insertion  : LEMMA
+FORALL (s : finseq[nat], x) :
+length(insertion(x, s)) = length(s) + 1
+
+
+occ_in_insert : LEMMA
+FORALL (s : finseq[nat], x,y:nat) :
+IF x=y THEN occurrences(insertion(y,s))(x) = 1 + occurrences(s)(x)
+ELSE  occurrences(insertion(y,s))(x) = occurrences(s)(x)
+ENDIF
+
+%%%%% This function sorts a list recursively using the 
+%%%%% insert function defined above
+fs_insertion_sort(s): RECURSIVE finseq[nat] = 
+IF length(s) = 0 THEN s ELSE
+insertion(first(s), fs_insertion_sort(rest(s)))
+ENDIF
+MEASURE length(s)
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Based on the poof techniques applied to formalize 
+%%%%% correctness of searching and sorting by switching and 
+%%%%% reversals, correctness of the insertion sort function 
+%%%%% is proved below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% insert increases the length of lists by one:
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fs_insert_size: LEMMA
+FORALL (s: finseq[nat], x: nat):
+       insertion(x,s)`length = s`length + 1
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% Inserting an element in a sorted list in non decreasing 
+%%%%% order gives as output a correctly sorted list; that is: 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% QUESTION 1
+%%%%% for this question you need to apply induction on the
+%%%%% length of the finite sequence "s".  This is done by
+%%%%% applying the PVS proof command 
+%%%%% (measure-induct+ "length(s)" ("s")) 
+%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fs_insert_in_sorted_preserves_sort : CONJECTURE
+FORALL (s: finseq[nat], x: nat):
+   is_sorted?(s) IMPLIES is_sorted?(insertion(x,s))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% insertion_sort in fact sorts lists; that is, 
+%%%%% the output list has exactly the same number of
+%%%%% ocurrences of each element in the original list
+%%%%% and is sorted as stated by insertion_sort_works
+%%%%% lemma below.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% A few lemmas are added to simplify the proof
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% QUESTION 2
+%%%%% as for previous question you need to apply induction on 
+%%%%% the length of the finite sequence "s".  
+%%%%% Also, applying the previous lemma would be useful.  
+%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fs_insertionsort_is_sorted: CONJECTURE
+FORALL (s : finseq[nat]) : is_sorted?(fs_insertion_sort(s))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% QUESTION 3
+%%%%% for this question you will not need to apply induction.
+%%%%% What you would need is to apply lemmas such as 
+%%%%% "occ_in_insert" and to check a few equations between
+%%%%% sequences by application of the command
+%%%%% "decompose-equality"
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+fs_ins_and_add_in_perm_is_perm : CONJECTURE
+FORALL (s1, 
+        (s2  | permutations(s1,s2)),  
+        x: nat) : permutations(add_first(x,s1), insertion(x,s2))
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%% QUESTION 4
+%%%%% again, the key is to apply induction. Addequate   
+%%%%% available lemmas would be also useful. 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+fs_insertion_sort_is_permutations: CONJECTURE	   
+FORALL (s) : permutations(s, fs_insertion_sort(s))
+
+fs_insertion_sort_works : LEMMA		 
+FORALL (s):
+     is_sorted?(fs_insertion_sort(s)) AND permutations(s, fs_insertion_sort(s)) 
+
+END binsertionsort
