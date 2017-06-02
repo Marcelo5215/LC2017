@@ -743,7 +743,50 @@
                         nil)
                        ("2" (postpone) nil nil))
                       nil)
-                     ("2" (postpone) nil nil) ("3" (postpone) nil nil))
+                     ("2" (postpone) nil nil)
+                     ("3" (hide 3)
+                      (("3" (expand "rest")
+                        (("3" (lift-if)
+                          (("3" (prop)
+                            (("3" (expand "^")
+                              (("3"
+                                (lift-if)
+                                (("3"
+                                  (prop)
+                                  (("1"
+                                    (hide -2 4)
+                                    (("1"
+                                      (lemma "empty_seq")
+                                      (("1"
+                                        (replace -1 1)
+                                        (("1" (assert) nil nil))
+                                        nil))
+                                      nil))
+                                    nil)
+                                   ("2"
+                                    (hide 4)
+                                    (("2"
+                                      (lemma "empty_seq")
+                                      (("2"
+                                        (replace -1 1)
+                                        (("2" (assert) nil nil))
+                                        nil))
+                                      nil))
+                                    nil)
+                                   ("3"
+                                    (expand "min")
+                                    (("3"
+                                      (hide-all-but 3)
+                                      (("3" (assert) nil nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
                     nil))
                   nil))
                 nil))
