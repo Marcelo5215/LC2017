@@ -735,7 +735,7 @@
                             (("1" (inst?)
                               (("1"
                                 (prop)
-                                (("1" (postpone) nil nil))
+                                (("1" (grind) nil nil))
                                 nil))
                               nil))
                             nil))
