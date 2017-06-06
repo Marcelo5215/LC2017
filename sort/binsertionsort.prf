@@ -503,7 +503,7 @@
     (length_rest formula-decl nil seq_extras "structures/")
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
     (/= const-decl "boolean" notequal nil)
-    (> const-decl "bool" reals nil) nil nil
+    (> const-decl "bool" reals nil)
     (rest const-decl "finseq" seq_extras "structures/")
     (length_insertion formula-decl nil binsertionsort nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
@@ -789,7 +789,126 @@
               (("3" (inst -1 "rest(x!1)")
                 (("3" (inst -1 "x")
                   (("3" (prop)
-                    (("1" (postpone) nil nil)
+                    (("1" (case "length(rest(x!1))=0")
+                      (("1" (hide -2 -3)
+                        (("1" (expand "insertion")
+                          (("1" (lift-if)
+                            (("1" (prop)
+                              (("1"
+                                (hide -1)
+                                (("1"
+                                  (expand "add_first")
+                                  (("1"
+                                    (expand "is_sorted?")
+                                    (("1"
+                                      (expand "finseq_appl")
+                                      (("1"
+                                        (skeep)
+                                        (("1"
+                                          (expand "insert?" -1)
+                                          (("1"
+                                            (replace -2 -1)
+                                            (("1"
+                                              (expand "insert?" 1 1)
+                                              (("1"
+                                                (expand "finseq_appl")
+                                                (("1"
+                                                  (lift-if)
+                                                  (("1"
+                                                    (prop)
+                                                    (("1"
+                                                      (expand
+                                                       "insert?")
+                                                      (("1"
+                                                        (expand
+                                                         "finseq_appl")
+                                                        (("1"
+                                                          (lift-if)
+                                                          (("1"
+                                                            (prop)
+                                                            (("1"
+                                                              (hide
+                                                               -1
+                                                               -3)
+                                                              (("1"
+                                                                (assert)
+                                                                nil
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil)
+                                                     ("2"
+                                                      (expand
+                                                       "insert?"
+                                                       2
+                                                       1)
+                                                      (("2"
+                                                        (lift-if)
+                                                        (("2"
+                                                          (prop)
+                                                          (("1"
+                                                            (expand
+                                                             "insert?")
+                                                            (("1"
+                                                              (expand
+                                                               "finseq_appl")
+                                                              (("1"
+                                                                (lift-if)
+                                                                (("1"
+                                                                  (prop)
+                                                                  (("1"
+                                                                    (hide
+                                                                     1
+                                                                     5)
+                                                                    (("1"
+                                                                      (assert)
+                                                                      nil
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil)
+                                                           ("2"
+                                                            (expand
+                                                             "insert?")
+                                                            (("2"
+                                                              (expand
+                                                               "finseq_appl")
+                                                              (("2"
+                                                                (lift-if)
+                                                                (("2"
+                                                                  (prop)
+                                                                  (("2"
+                                                                    (assert)
+                                                                    nil
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil)
+                       ("2" (postpone) nil nil))
+                      nil)
                      ("2" (expand "rest" 1)
                       (("2" (hide 3 2)
                         (("2" (prop)
@@ -932,7 +1051,7 @@
     (rest const-decl "finseq" seq_extras "structures/")
     (length_rest formula-decl nil seq_extras "structures/")
     (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    nil nil (fs_insert_size formula-decl nil binsertionsort nil)
+    (fs_insert_size formula-decl nil binsertionsort nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
     (^ const-decl "finseq" finite_sequences nil)
@@ -947,7 +1066,6 @@
     (AND const-decl "[bool, bool -> bool]" booleans nil)
     (numfield nonempty-type-eq-decl nil number_fields nil)
     (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    nil nil nil
     (int_plus_int_is_int application-judgement "int" integers nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
@@ -1102,7 +1220,7 @@
     (rest const-decl "finseq" seq_extras "structures/")
     (length_rest formula-decl nil seq_extras "structures/")
     (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    nil nil (fs_insert_size formula-decl nil binsertionsort nil)
+    (fs_insert_size formula-decl nil binsertionsort nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
     (^ const-decl "finseq" finite_sequences nil)
@@ -1117,7 +1235,6 @@
     (AND const-decl "[bool, bool -> bool]" booleans nil)
     (numfield nonempty-type-eq-decl nil number_fields nil)
     (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    nil nil nil
     (int_plus_int_is_int application-judgement "int" integers nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
@@ -1427,8 +1544,7 @@
     (int_minus_int_is_int application-judgement "int" integers nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
-    (int_plus_int_is_int application-judgement "int" integers nil) nil
-    nil nil
+    (int_plus_int_is_int application-judgement "int" integers nil)
     (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
     (numfield nonempty-type-eq-decl nil number_fields nil)
     (AND const-decl "[bool, bool -> bool]" booleans nil)
@@ -1443,7 +1559,7 @@
     (^ const-decl "finseq" finite_sequences nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
-    (fs_insert_size formula-decl nil binsertionsort nil) nil nil
+    (fs_insert_size formula-decl nil binsertionsort nil)
     (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
     (length_rest formula-decl nil seq_extras "structures/")
     (rest const-decl "finseq" seq_extras "structures/")
@@ -1725,7 +1841,6 @@
     (add_first const-decl "finseq" seq_extras "structures/")
     (nnint_plus_posint_is_posint application-judgement "posint"
      integers nil)
-    nil nil
     (int_plus_int_is_int application-judgement "int" integers nil)
     (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
     (< const-decl "bool" reals nil)
@@ -1900,8 +2015,7 @@
     (empty_seq const-decl "finseq" finite_sequences nil)
     (< const-decl "bool" reals nil)
     (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
-    (int_plus_int_is_int application-judgement "int" integers nil) nil
-    nil
+    (int_plus_int_is_int application-judgement "int" integers nil)
     (nnint_plus_posint_is_posint application-judgement "posint"
      integers nil)
     (add_first const-decl "finseq" seq_extras "structures/")
@@ -2001,7 +2115,7 @@
     (seq_first_rest formula-decl nil seq_extras "structures/")
     (/= const-decl "boolean" notequal nil)
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
-    (first const-decl "T" seq_extras "structures/") nil
+    (first const-decl "T" seq_extras "structures/")
     (rest const-decl "finseq" seq_extras "structures/")
     (posint_plus_nnint_is_posint application-judgement "posint"
      integers nil))
@@ -2030,7 +2144,7 @@
     nil)
    ((posint_plus_nnint_is_posint application-judgement "posint"
      integers nil)
-    (rest const-decl "finseq" seq_extras "structures/") nil
+    (rest const-decl "finseq" seq_extras "structures/")
     (first const-decl "T" seq_extras "structures/")
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
     (/= const-decl "boolean" notequal nil)
