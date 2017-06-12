@@ -503,7 +503,7 @@
     (length_rest formula-decl nil seq_extras "structures/")
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
     (/= const-decl "boolean" notequal nil)
-    (> const-decl "bool" reals nil)
+    (> const-decl "bool" reals nil) nil nil
     (rest const-decl "finseq" seq_extras "structures/")
     (length_insertion formula-decl nil binsertionsort nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
@@ -689,21 +689,14 @@
         (("" (hide -1)
           (("" (prop)
             (("1" (expand "add_first")
-              (("1" (expand "is_sorted?")
-                (("1" (skeep)
-                  (("1" (expand "finseq_appl")
-                    (("1" (replace -1 -3)
+              (("1" (hide -2)
+                (("1" (expand "is_sorted?")
+                  (("1" (skeep)
+                    (("1" (expand "finseq_appl")
                       (("1" (expand "insert?")
-                        (("1" (replace -1 -2)
-                          (("1" (hide -3 -1)
-                            (("1" (lift-if)
-                              (("1"
-                                (prop)
-                                (("1" (assert) nil nil)
-                                 ("2" (assert) nil nil))
-                                nil))
-                              nil))
-                            nil))
+                        (("1" (expand "finseq_appl")
+                          (("1" (replace -1 -2)
+                            (("1" (assert) nil nil)) nil))
                           nil))
                         nil))
                       nil))
@@ -715,10 +708,10 @@
               (("2" (skeep)
                 (("2" (expand "finseq_appl")
                   (("2" (case "k=0")
-                    (("1" (replace -1)
-                      (("1" (hide -1 -3 -4)
-                        (("1" (expand "add_first")
-                          (("1" (expand "insert?")
+                    (("1" (hide-all-but (-1 -2 1))
+                      (("1" (expand "add_first")
+                        (("1" (expand "insert?")
+                          (("1" (replace -1 1)
                             (("1" (expand "finseq_appl")
                               (("1"
                                 (expand "first")
@@ -733,32 +726,21 @@
                         nil))
                       nil)
                      ("2" (inst -3 "k-1")
-                      (("1" (prop)
-                        (("1" (expand "add_first")
-                          (("1" (expand "insert?")
-                            (("1" (lift-if)
+                      (("1" (assert)
+                        (("1" (prop)
+                          (("1" (expand "add_first")
+                            (("1" (expand "insert?")
                               (("1"
-                                (prop)
-                                (("1"
-                                  (hide 4 3 1 -2 -3)
-                                  (("1"
-                                    (expand "finseq_appl")
-                                    (("1" (assert) nil nil))
-                                    nil))
-                                  nil))
+                                (expand "finseq_appl")
+                                (("1" (propax) nil nil))
                                 nil))
                               nil))
-                            nil))
-                          nil)
-                         ("2" (expand "add_first")
-                          (("2" (expand "insert?")
-                            (("2" (lift-if)
+                            nil)
+                           ("2" (hide-all-but (-2 1))
+                            (("2" (expand "add_first")
                               (("2"
-                                (prop)
-                                (("2"
-                                  (hide -1 1 2 4 5)
-                                  (("2" (assert) nil nil))
-                                  nil))
+                                (expand "insert?")
+                                (("2" (assert) nil nil))
                                 nil))
                               nil))
                             nil))
@@ -766,17 +748,17 @@
                         nil)
                        ("2" (expand "add_first")
                         (("2" (expand "insert?")
-                          (("2" (prop)
-                            (("1" (lift-if)
+                          (("2" (expand "finseq_appl")
+                            (("2" (prop)
                               (("1"
-                                (prop)
+                                (lift-if)
                                 (("1"
-                                  (expand "finseq_appl")
+                                  (prop)
                                   (("1" (assert) nil nil))
                                   nil))
-                                nil))
-                              nil)
-                             ("2" (assert) nil nil))
+                                nil)
+                               ("2" (assert) nil nil))
+                              nil))
                             nil))
                           nil))
                         nil))
@@ -792,105 +774,38 @@
                     (("1" (case "length(rest(x!1))=0")
                       (("1" (hide -2 -3)
                         (("1" (expand "insertion")
-                          (("1" (lift-if)
-                            (("1" (prop)
+                          (("1" (replace -1 2)
+                            (("1" (expand "add_first")
                               (("1"
-                                (hide -1)
+                                (expand "is_sorted?")
                                 (("1"
-                                  (expand "add_first")
+                                  (expand "finseq_appl")
                                   (("1"
-                                    (expand "is_sorted?")
+                                    (skeep)
                                     (("1"
-                                      (expand "finseq_appl")
+                                      (expand "insert?")
                                       (("1"
-                                        (skeep)
+                                        (expand "finseq_appl")
                                         (("1"
-                                          (expand "insert?" -1)
+                                          (lift-if)
                                           (("1"
-                                            (replace -2 -1)
-                                            (("1"
-                                              (expand "insert?" 1 1)
-                                              (("1"
-                                                (expand "finseq_appl")
-                                                (("1"
-                                                  (lift-if)
-                                                  (("1"
-                                                    (prop)
-                                                    (("1"
-                                                      (expand
-                                                       "insert?")
-                                                      (("1"
-                                                        (expand
-                                                         "finseq_appl")
-                                                        (("1"
-                                                          (lift-if)
-                                                          (("1"
-                                                            (prop)
-                                                            (("1"
-                                                              (hide
-                                                               -1
-                                                               -3)
-                                                              (("1"
-                                                                (assert)
-                                                                nil
-                                                                nil))
-                                                              nil))
-                                                            nil))
-                                                          nil))
-                                                        nil))
-                                                      nil)
-                                                     ("2"
-                                                      (expand
-                                                       "insert?"
-                                                       2
-                                                       1)
-                                                      (("2"
-                                                        (lift-if)
-                                                        (("2"
-                                                          (prop)
-                                                          (("1"
-                                                            (expand
-                                                             "insert?")
-                                                            (("1"
-                                                              (expand
-                                                               "finseq_appl")
-                                                              (("1"
-                                                                (lift-if)
-                                                                (("1"
-                                                                  (prop)
-                                                                  (("1"
-                                                                    (hide
-                                                                     1
-                                                                     5)
-                                                                    (("1"
-                                                                      (assert)
-                                                                      nil
-                                                                      nil))
-                                                                    nil))
-                                                                  nil))
-                                                                nil))
-                                                              nil))
-                                                            nil)
-                                                           ("2"
-                                                            (expand
-                                                             "insert?")
-                                                            (("2"
-                                                              (expand
-                                                               "finseq_appl")
-                                                              (("2"
-                                                                (lift-if)
-                                                                (("2"
-                                                                  (prop)
-                                                                  (("2"
-                                                                    (assert)
-                                                                    nil
-                                                                    nil))
-                                                                  nil))
-                                                                nil))
-                                                              nil))
-                                                            nil))
-                                                          nil))
-                                                        nil))
+                                            (prop)
+                                            (("1" (assert) nil nil)
+                                             ("2"
+                                              (replace -2 -3)
+                                              (("2" (assert) nil nil))
+                                              nil)
+                                             ("3"
+                                              (expand "rest")
+                                              (("3"
+                                                (lift-if)
+                                                (("3"
+                                                  (prop)
+                                                  (("3"
+                                                    (hide 1 2 3)
+                                                    (("3"
+                                                      (assert)
+                                                      nil
                                                       nil))
                                                     nil))
                                                   nil))
@@ -907,37 +822,231 @@
                             nil))
                           nil))
                         nil)
-                       ("2" (postpone) nil nil))
+                       ("2" (expand "is_sorted?" 3)
+                        (("2" (skeep)
+                          (("2" (expand "finseq_appl")
+                            (("2" (hide -3)
+                              (("2"
+                                (expand "add_first")
+                                (("2"
+                                  (expand "insert?")
+                                  (("2"
+                                    (lift-if)
+                                    (("2"
+                                      (prop)
+                                      (("1"
+                                        (replace -1 1)
+                                        (("1"
+                                          (expand "finseq_appl")
+                                          (("1"
+                                            (expand "insertion" 1)
+                                            (("1"
+                                              (lift-if)
+                                              (("1"
+                                                (prop)
+                                                (("1"
+                                                  (expand "add_first")
+                                                  (("1"
+                                                    (expand "insert?")
+                                                    (("1"
+                                                      (hide -2 -4)
+                                                      (("1"
+                                                        (hide-all-but
+                                                         (1 4))
+                                                        (("1"
+                                                          (assert)
+                                                          nil
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil)
+                                                 ("2"
+                                                  (expand "add_first")
+                                                  (("2"
+                                                    (expand "insert?")
+                                                    (("2"
+                                                      (reveal -1)
+                                                      (("2"
+                                                        (hide -3)
+                                                        (("2"
+                                                          (expand
+                                                           "first")
+                                                          (("2"
+                                                            (expand
+                                                             "finseq_appl")
+                                                            (("2"
+                                                              (expand
+                                                               "is_sorted?")
+                                                              (("2"
+                                                                (inst
+                                                                 -1
+                                                                 "0")
+                                                                (("2"
+                                                                  (expand
+                                                                   "finseq_appl")
+                                                                  (("2"
+                                                                    (split)
+                                                                    (("1"
+                                                                      (hide
+                                                                       -2
+                                                                       -3
+                                                                       3)
+                                                                      (("1"
+                                                                        (expand
+                                                                         "rest"
+                                                                         2)
+                                                                        (("1"
+                                                                          (lift-if)
+                                                                          (("1"
+                                                                            (prop)
+                                                                            (("1"
+                                                                              (expand
+                                                                               "^")
+                                                                              (("1"
+                                                                                (lift-if)
+                                                                                (("1"
+                                                                                  (prop)
+                                                                                  (("1"
+                                                                                    (assert)
+                                                                                    (("1"
+                                                                                      (hide-all-but
+                                                                                       (-1
+                                                                                        4))
+                                                                                      (("1"
+                                                                                        (expand
+                                                                                         "rest")
+                                                                                        (("1"
+                                                                                          (expand
+                                                                                           "^")
+                                                                                          (("1"
+                                                                                            (expand
+                                                                                             "empty_seq")
+                                                                                            (("1"
+                                                                                              (propax)
+                                                                                              nil
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil))
+                                                                                        nil))
+                                                                                      nil))
+                                                                                    nil)
+                                                                                   ("2"
+                                                                                    (assert)
+                                                                                    (("2"
+                                                                                      (hide-all-but
+                                                                                       (-1
+                                                                                        4))
+                                                                                      (("2"
+                                                                                        (expand
+                                                                                         "rest")
+                                                                                        (("2"
+                                                                                          (expand
+                                                                                           "^")
+                                                                                          (("2"
+                                                                                            (expand
+                                                                                             "empty_seq")
+                                                                                            (("2"
+                                                                                              (propax)
+                                                                                              nil
+                                                                                              nil))
+                                                                                            nil))
+                                                                                          nil))
+                                                                                        nil))
+                                                                                      nil))
+                                                                                    nil))
+                                                                                  nil))
+                                                                                nil))
+                                                                              nil))
+                                                                            nil))
+                                                                          nil))
+                                                                        nil))
+                                                                      nil)
+                                                                     ("2"
+                                                                      (expand
+                                                                       "rest"
+                                                                       4)
+                                                                      (("2"
+                                                                        (expand
+                                                                         "^")
+                                                                        (("2"
+                                                                          (expand
+                                                                           "min")
+                                                                          (("2"
+                                                                            (expand
+                                                                             "empty_seq")
+                                                                            (("2"
+                                                                              (lift-if)
+                                                                              (("2"
+                                                                                (prop)
+                                                                                (("2"
+                                                                                  (assert)
+                                                                                  nil
+                                                                                  nil))
+                                                                                nil))
+                                                                              nil))
+                                                                            nil))
+                                                                          nil))
+                                                                        nil))
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil)
+                                       ("2"
+                                        (expand "is_sorted?")
+                                        (("2"
+                                          (inst -1 "k-1")
+                                          (("1" (assert) nil nil)
+                                           ("2" (assert) nil nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
                       nil)
-                     ("2" (expand "rest" 1)
-                      (("2" (hide 3 2)
+                     ("2" (hide 2 3)
+                      (("2" (expand "rest")
                         (("2" (prop)
                           (("2" (hide 3)
                             (("2" (expand "^")
                               (("2"
                                 (prop)
                                 (("1"
-                                  (lemma "empty_seq")
+                                  (hide-all-but 1)
                                   (("1"
-                                    (replace -1 1)
+                                    (lemma "empty_seq")
                                     (("1"
-                                      (assert)
+                                      (replace -1 1)
                                       (("1"
-                                        (hide-all-but 1)
-                                        (("1"
-                                          (expand "is_sorted?")
-                                          (("1" (propax) nil nil))
-                                          nil))
+                                        (expand "is_sorted?")
+                                        (("1" (propax) nil nil))
                                         nil))
                                       nil))
                                     nil))
                                   nil)
                                  ("2"
-                                  (lemma "empty_seq")
+                                  (hide-all-but 1)
                                   (("2"
-                                    (replace -1 1)
+                                    (lemma "empty_seq")
                                     (("2"
-                                      (hide-all-but 1)
+                                      (replace -1 1)
                                       (("2"
                                         (expand "is_sorted?")
                                         (("2" (propax) nil nil))
@@ -946,18 +1055,19 @@
                                     nil))
                                   nil)
                                  ("3"
-                                  (expand "min")
+                                  (expand "is_sorted?")
                                   (("3"
-                                    (expand "is_sorted?")
+                                    (expand "finseq_appl")
                                     (("3"
-                                      (skeep)
+                                      (expand "min")
                                       (("3"
-                                        (expand "finseq_appl")
+                                        (skeep)
                                         (("3"
                                           (hide 1 2 4)
                                           (("3"
                                             (inst -2 "k+1")
-                                            (("3" (assert) nil nil))
+                                            (("1" (assert) nil nil)
+                                             ("2" (assert) nil nil))
                                             nil))
                                           nil))
                                         nil))
@@ -970,7 +1080,7 @@
                           nil))
                         nil))
                       nil)
-                     ("3" (hide 3)
+                     ("3" (hide -1 2 3)
                       (("3" (expand "rest")
                         (("3" (lift-if)
                           (("3" (prop)
@@ -980,7 +1090,7 @@
                                 (("3"
                                   (prop)
                                   (("1"
-                                    (hide -1 -2 4)
+                                    (hide -1 2)
                                     (("1"
                                       (lemma "empty_seq")
                                       (("1"
@@ -990,20 +1100,20 @@
                                       nil))
                                     nil)
                                    ("2"
-                                    (hide -1 -2 4)
+                                    (hide -1 2)
                                     (("2"
                                       (lemma "empty_seq")
-                                      (("2" (assert) nil nil))
+                                      (("2"
+                                        (replace -1 1)
+                                        (("2" (assert) nil nil))
+                                        nil))
                                       nil))
                                     nil)
                                    ("3"
-                                    (hide -1 4)
+                                    (expand "min")
                                     (("3"
-                                      (expand "min")
-                                      (("3"
-                                        (hide-all-but 3)
-                                        (("3" (assert) nil nil))
-                                        nil))
+                                      (hide-all-but 3)
+                                      (("3" (assert) nil nil))
                                       nil))
                                     nil))
                                   nil))
@@ -1048,41 +1158,49 @@
     (finite_sequence type-eq-decl nil finite_sequences nil)
     (is_sorted? const-decl "bool" sorting_seq nil)
     (insertion def-decl "finseq[nat]" binsertionsort nil)
-    (rest const-decl "finseq" seq_extras "structures/")
-    (length_rest formula-decl nil seq_extras "structures/")
-    (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    (fs_insert_size formula-decl nil binsertionsort nil)
-    (real_gt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
-    (^ const-decl "finseq" finite_sequences nil)
-    (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
-    (empty_seq const-decl "finseq" finite_sequences nil)
-    (/= const-decl "boolean" notequal nil)
-    (not_empty_seq type-eq-decl nil seq_extras "structures/")
-    (real_lt_is_strict_total_order name-judgement
-     "(strict_total_order?[real])" real_props nil)
-    (real_ge_is_total_order name-judgement "(total_order?[real])"
-     real_props nil)
-    (AND const-decl "[bool, bool -> bool]" booleans nil)
-    (numfield nonempty-type-eq-decl nil number_fields nil)
-    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    (int_plus_int_is_int application-judgement "int" integers nil)
+    (insert? const-decl "finseq" seq_extras "structures/")
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
-    (int_minus_int_is_int application-judgement "int" integers nil)
-    (odd_plus_even_is_odd application-judgement "odd_int" integers nil)
-    (first const-decl "T" seq_extras "structures/")
-    (upto nonempty-type-eq-decl nil nat_types nil)
-    (<= const-decl "bool" reals nil)
-    (= const-decl "[T, T -> boolean]" equalities nil)
-    (nnint_plus_posint_is_posint application-judgement "posint"
-     integers nil)
+    (even_minus_odd_is_odd application-judgement "odd_int" integers
+     nil)
     (finseq_appl const-decl "[below[length(fs)] -> T]" finite_sequences
      nil)
     (add_first const-decl "finseq" seq_extras "structures/")
-    (insert? const-decl "finseq" seq_extras "structures/")
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (first const-decl "T" seq_extras "structures/")
     (posint_plus_nnint_is_posint application-judgement "posint"
-     integers nil))
+     integers nil)
+    (AND const-decl "[bool, bool -> bool]" booleans nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (x skolem-const-decl "nat" binsertionsort nil)
+    (x!1 skolem-const-decl "finseq[nat]" binsertionsort nil)
+    (k skolem-const-decl "below[length(add_first(x, x!1))]"
+     binsertionsort nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (rest const-decl "finseq" seq_extras "structures/")
+    (k skolem-const-decl
+     "below[length(add_first(first(x!1), insertion(x, rest(x!1))))]"
+     binsertionsort nil)
+    (not_empty_seq type-eq-decl nil seq_extras "structures/")
+    (/= const-decl "boolean" notequal nil)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (empty_seq const-decl "finseq" finite_sequences nil)
+    (^ const-decl "finseq" finite_sequences nil)
+    (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
+    (nnint_plus_posint_is_posint application-judgement "posint"
+     integers nil)
+    (k skolem-const-decl "below[min(x!1`length - 1, x!1`length - 1)]"
+     binsertionsort nil)
+    (<= const-decl "bool" reals nil)
+    (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    (int_min application-judgement "{k: int | k <= i AND k <= j}"
+     real_defs nil))
    nil)
   (fs_insert_in_sorted_preserves_sort-3 nil 3702716052
    ("" (measure-induct+ "length(s)" ("s"))
@@ -1220,7 +1338,7 @@
     (rest const-decl "finseq" seq_extras "structures/")
     (length_rest formula-decl nil seq_extras "structures/")
     (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    (fs_insert_size formula-decl nil binsertionsort nil)
+    nil nil (fs_insert_size formula-decl nil binsertionsort nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
     (^ const-decl "finseq" finite_sequences nil)
@@ -1235,6 +1353,7 @@
     (AND const-decl "[bool, bool -> bool]" booleans nil)
     (numfield nonempty-type-eq-decl nil number_fields nil)
     (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
+    nil nil nil
     (int_plus_int_is_int application-judgement "int" integers nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
@@ -1544,7 +1663,8 @@
     (int_minus_int_is_int application-judgement "int" integers nil)
     (real_le_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
-    (int_plus_int_is_int application-judgement "int" integers nil)
+    (int_plus_int_is_int application-judgement "int" integers nil) nil
+    nil nil
     (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
     (numfield nonempty-type-eq-decl nil number_fields nil)
     (AND const-decl "[bool, bool -> bool]" booleans nil)
@@ -1559,7 +1679,7 @@
     (^ const-decl "finseq" finite_sequences nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
-    (fs_insert_size formula-decl nil binsertionsort nil)
+    (fs_insert_size formula-decl nil binsertionsort nil) nil nil
     (+ const-decl "[numfield, numfield -> numfield]" number_fields nil)
     (length_rest formula-decl nil seq_extras "structures/")
     (rest const-decl "finseq" seq_extras "structures/")
@@ -1599,7 +1719,9 @@
           (("1" (expand "is_sorted?")
             (("1" (skeep)
               (("1" (expand "finseq_appl")
-                (("1" (replace -1 -2) (("1" (assert) nil nil)) nil))
+                (("1" (replace -1 -2)
+                  (("1" (hide -1 1) (("1" (assert) nil nil)) nil))
+                  nil))
                 nil))
               nil))
             nil))
@@ -1673,6 +1795,10 @@
     (is_sorted? const-decl "bool" sorting_seq nil)
     (fs_insertion_sort def-decl "finseq[nat]" binsertionsort nil)
     (finseq_appl const-decl "[below[length(fs)] -> T]" finite_sequences
+     nil)
+    (real_le_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (even_minus_even_is_even application-judgement "even_int" integers
      nil)
     (fs_insert_in_sorted_preserves_sort formula-decl nil binsertionsort
      nil)
@@ -1830,33 +1956,389 @@
    shostak))
  (fs_ins_and_add_in_perm_is_perm 0
   (fs_ins_and_add_in_perm_is_perm-2 nil 3702716319
-   ("" (skeep) (("" (postpone) nil nil)) nil)
-   ((int_minus_int_is_int application-judgement "int" integers nil)
-    (occurrences def-decl "nat" sorting_seq nil)
+   ("" (skeep)
+    (("" (typepred "s2")
+      (("" (expand "permutations")
+        (("" (skeep)
+          (("" (inst -1 "x_1")
+            (("" (lemma "occ_in_insert")
+              (("" (inst -1 "s2" "x_1" "x")
+                (("" (prop)
+                  (("1" (expand "occurrences" 1 1)
+                    (("1" (lift-if)
+                      (("1" (prop)
+                        (("1" (hide-all-but -1)
+                          (("1" (expand "add_first")
+                            (("1" (expand "insert?")
+                              (("1" (assert) nil nil)) nil))
+                            nil))
+                          nil)
+                         ("2"
+                          (case "add_first(x, s1) ^ (1, length(add_first(x, s1)) - 1)=s1")
+                          (("1" (expand "finseq_appl")
+                            (("1" (replace -1 1)
+                              (("1"
+                                (replace -5 1)
+                                (("1" (assert) nil nil))
+                                nil))
+                              nil))
+                            nil)
+                           ("2" (replace -2)
+                            (("2" (hide -1 -2 1 3)
+                              (("2"
+                                (expand "^")
+                                (("2"
+                                  (expand "min")
+                                  (("2"
+                                    (expand "add_first")
+                                    (("2"
+                                      (expand "insert?")
+                                      (("2"
+                                        (expand "finseq_appl")
+                                        (("2"
+                                          (expand "empty_seq")
+                                          (("2"
+                                            (expand "occurrences" 1 1)
+                                            (("2"
+                                              (lift-if)
+                                              (("2"
+                                                (replace -1 1)
+                                                (("2"
+                                                  (assert)
+                                                  (("2"
+                                                    (prop)
+                                                    (("1"
+                                                      (expand
+                                                       "occurrences"
+                                                       -3
+                                                       1)
+                                                      (("1"
+                                                        (lift-if)
+                                                        (("1"
+                                                          (prop)
+                                                          (("1"
+                                                            (assert)
+                                                            nil
+                                                            nil)
+                                                           ("2"
+                                                            (assert)
+                                                            nil
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil)
+                                                     ("2"
+                                                      (expand
+                                                       "occurrences"
+                                                       -3
+                                                       1)
+                                                      (("2"
+                                                        (lift-if)
+                                                        (("2"
+                                                          (prop)
+                                                          (("1"
+                                                            (assert)
+                                                            nil
+                                                            nil)
+                                                           ("2"
+                                                            (assert)
+                                                            nil
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil)
+                                                     ("3"
+                                                      (expand
+                                                       "occurrences"
+                                                       -2
+                                                       1)
+                                                      (("3"
+                                                        (expand
+                                                         "finseq_appl")
+                                                        (("3"
+                                                          (lift-if)
+                                                          (("3"
+                                                            (prop)
+                                                            (("1"
+                                                              (assert)
+                                                              nil
+                                                              nil)
+                                                             ("2"
+                                                              (expand
+                                                               "occurrences"
+                                                               4
+                                                               1)
+                                                              (("2"
+                                                                (expand
+                                                                 "finseq_appl")
+                                                                (("2"
+                                                                  (lift-if)
+                                                                  (("2"
+                                                                    (prop)
+                                                                    (("2"
+                                                                      (expand
+                                                                       "^")
+                                                                      (("2"
+                                                                        (propax)
+                                                                        nil
+                                                                        nil))
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil)
+                                                             ("3"
+                                                              (expand
+                                                               "occurrences"
+                                                               5
+                                                               1)
+                                                              (("3"
+                                                                (expand
+                                                                 "finseq_appl")
+                                                                (("3"
+                                                                  (lift-if)
+                                                                  (("3"
+                                                                    (prop)
+                                                                    (("3"
+                                                                      (expand
+                                                                       "^")
+                                                                      (("3"
+                                                                        (propax)
+                                                                        nil
+                                                                        nil))
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil)
+                           ("3" (hide -1)
+                            (("3" (hide-all-but (1 3))
+                              (("3" (assert) nil nil)) nil))
+                            nil))
+                          nil)
+                         ("3" (expand "finseq_appl")
+                          (("3" (expand "add_first")
+                            (("3" (expand "insert?")
+                              (("3"
+                                (hide-all-but (-1 1))
+                                (("3" (assert) nil nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil)
+                   ("2" (replace -1 2)
+                    (("2" (expand "occurrences" 2 1)
+                      (("2" (lift-if)
+                        (("2" (prop)
+                          (("1" (hide-all-but -1)
+                            (("1" (expand "add_first")
+                              (("1"
+                                (expand "insert?")
+                                (("1" (assert) nil nil))
+                                nil))
+                              nil))
+                            nil)
+                           ("2" (hide-all-but (-1 3))
+                            (("2" (expand "finseq_appl")
+                              (("2"
+                                (expand "add_first")
+                                (("2"
+                                  (expand "insert?")
+                                  (("2" (assert) nil nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil)
+                           ("3" (hide-all-but (-2 2))
+                            (("3" (expand "^")
+                              (("3"
+                                (expand "min")
+                                (("3"
+                                  (expand "add_first")
+                                  (("3"
+                                    (expand "insert?")
+                                    (("3"
+                                      (expand "finseq_appl")
+                                      (("3"
+                                        (expand "empty_seq")
+                                        (("3"
+                                          (expand "occurrences" 1 1)
+                                          (("3"
+                                            (lift-if)
+                                            (("3"
+                                              (prop)
+                                              (("1"
+                                                (expand
+                                                 "occurrences"
+                                                 -2
+                                                 1)
+                                                (("1"
+                                                  (expand
+                                                   "finseq_appl")
+                                                  (("1"
+                                                    (lift-if)
+                                                    (("1"
+                                                      (prop)
+                                                      (("1"
+                                                        (assert)
+                                                        nil
+                                                        nil)
+                                                       ("2"
+                                                        (assert)
+                                                        nil
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil)
+                                               ("2"
+                                                (expand
+                                                 "occurrences"
+                                                 -2
+                                                 1)
+                                                (("2"
+                                                  (lift-if)
+                                                  (("2"
+                                                    (prop)
+                                                    (("1"
+                                                      (assert)
+                                                      nil
+                                                      nil)
+                                                     ("2"
+                                                      (assert)
+                                                      nil
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil)
+                                               ("3"
+                                                (expand
+                                                 "occurrences"
+                                                 -1
+                                                 1)
+                                                (("3"
+                                                  (expand
+                                                   "finseq_appl")
+                                                  (("3"
+                                                    (lift-if)
+                                                    (("3"
+                                                      (prop)
+                                                      (("1"
+                                                        (assert)
+                                                        nil
+                                                        nil)
+                                                       ("2"
+                                                        (expand
+                                                         "occurrences"
+                                                         4
+                                                         1)
+                                                        (("2"
+                                                          (expand
+                                                           "finseq_appl")
+                                                          (("2"
+                                                            (lift-if)
+                                                            (("2"
+                                                              (prop)
+                                                              (("2"
+                                                                (expand
+                                                                 "^")
+                                                                (("2"
+                                                                  (propax)
+                                                                  nil
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil)
+                                                       ("3"
+                                                        (expand
+                                                         "occurrences"
+                                                         5
+                                                         1)
+                                                        (("3"
+                                                          (expand
+                                                           "finseq_appl")
+                                                          (("3"
+                                                            (lift-if)
+                                                            (("3"
+                                                              (prop)
+                                                              (("3"
+                                                                (expand
+                                                                 "^")
+                                                                (("3"
+                                                                  (propax)
+                                                                  nil
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil))
+              nil))
+            nil))
+          nil))
+        nil))
+      nil))
+    nil)
+   ((occurrences def-decl "nat" sorting_seq nil)
+    (add_first const-decl "finseq" seq_extras "structures/")
     (posint_plus_nnint_is_posint application-judgement "posint"
      integers nil)
-    (finseq_appl const-decl "[below[length(fs)] -> T]" finite_sequences
-     nil)
     (insert? const-decl "finseq" seq_extras "structures/")
-    (add_first const-decl "finseq" seq_extras "structures/")
-    (nnint_plus_posint_is_posint application-judgement "posint"
-     integers nil)
-    (int_plus_int_is_int application-judgement "int" integers nil)
-    (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
-    (< const-decl "bool" reals nil)
-    (empty_seq const-decl "finseq" finite_sequences nil)
-    (int_min application-judgement "{k: int | k <= i AND k <= j}"
-     real_defs nil)
     (real_gt_is_strict_total_order name-judgement
      "(strict_total_order?[real])" real_props nil)
-    (odd_plus_even_is_odd application-judgement "odd_int" integers nil)
-    (empty_0 formula-decl nil seq_extras "structures/")
+    (empty_seq const-decl "finseq" finite_sequences nil)
+    (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
+    (finseq_appl const-decl "[below[length(fs)] -> T]" finite_sequences
+     nil)
     (real_ge_is_total_order name-judgement "(total_order?[real])"
      real_props nil)
-    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
-    (numfield nonempty-type-eq-decl nil number_fields nil)
-    (^ const-decl "finseq" finite_sequences nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
     (= const-decl "[T, T -> boolean]" equalities nil)
+    (^ const-decl "finseq" finite_sequences nil)
+    (numfield nonempty-type-eq-decl nil number_fields nil)
+    (- const-decl "[numfield, numfield -> numfield]" number_fields nil)
     (occ_in_insert formula-decl nil binsertionsort nil)
     (boolean nonempty-type-decl nil booleans nil)
     (bool nonempty-type-eq-decl nil booleans nil)
@@ -2015,7 +2497,8 @@
     (empty_seq const-decl "finseq" finite_sequences nil)
     (< const-decl "bool" reals nil)
     (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
-    (int_plus_int_is_int application-judgement "int" integers nil)
+    (int_plus_int_is_int application-judgement "int" integers nil) nil
+    nil
     (nnint_plus_posint_is_posint application-judgement "posint"
      integers nil)
     (add_first const-decl "finseq" seq_extras "structures/")
@@ -2033,41 +2516,351 @@
     (("" (expand "fs_insertion_sort" 1)
       (("" (lift-if)
         (("" (prop)
-          (("1" (hide-all-but 1)
-            (("1" (expand "permutations") (("1" (propax) nil nil))
-              nil))
-            nil)
-           ("2" (inst -1 "rest(x!1)")
-            (("2" (prop)
-              (("1" (postpone) nil nil)
-               ("2" (hide 3)
-                (("2" (expand "rest")
-                  (("2" (lift-if)
-                    (("2" (prop)
-                      (("2" (expand "^")
-                        (("2" (lift-if)
-                          (("2" (prop)
-                            (("1" (hide -1 3)
+          (("1" (expand "permutations") (("1" (propax) nil nil)) nil)
+           ("2" (lemma "fs_ins_and_add_in_perm_is_perm")
+            (("2"
+              (inst -1 "rest(x!1)" "fs_insertion_sort(rest(x!1))"
+               "first(x!1)")
+              (("1" (inst -2 "rest(x!1)")
+                (("1" (prop)
+                  (("1" (case "add_first(first(x!1), rest(x!1))=x!1")
+                    (("1" (replace -1 -3) (("1" (propax) nil nil)) nil)
+                     ("2" (hide - 3)
+                      (("2" (expand "first")
+                        (("2" (expand "finseq_appl")
+                          (("2" (decompose-equality)
+                            (("1" (expand "add_first")
                               (("1"
-                                (lemma "empty_seq")
+                                (expand "insert?")
                                 (("1"
-                                  (replace -1 1)
-                                  (("1" (assert) nil nil))
+                                  (expand "rest")
+                                  (("1"
+                                    (expand "^")
+                                    (("1"
+                                      (expand "empty_seq")
+                                      (("1"
+                                        (lift-if)
+                                        (("1"
+                                          (prop)
+                                          (("1" (assert) nil nil)
+                                           ("2" (assert) nil nil)
+                                           ("3"
+                                            (expand "min")
+                                            (("3" (propax) nil nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
                                   nil))
                                 nil))
                               nil)
-                             ("2" (hide -1 3)
+                             ("2" (decompose-equality)
                               (("2"
-                                (lemma "empty_seq")
-                                (("2" (assert) nil nil))
+                                (expand "add_first")
+                                (("2"
+                                  (expand "insert?")
+                                  (("2"
+                                    (lift-if)
+                                    (("2"
+                                      (prop)
+                                      (("1"
+                                        (replace -1 1)
+                                        (("1" (propax) nil nil))
+                                        nil)
+                                       ("2"
+                                        (expand "finseq_appl")
+                                        (("2"
+                                          (expand "rest")
+                                          (("2"
+                                            (expand "^")
+                                            (("2"
+                                              (lift-if)
+                                              (("2"
+                                                (prop)
+                                                (("1"
+                                                  (lemma "empty_0")
+                                                  (("1"
+                                                    (inst -1 "x!1")
+                                                    (("1"
+                                                      (assert)
+                                                      (("1"
+                                                        (typepred
+                                                         "x!2")
+                                                        (("1"
+                                                          (expand
+                                                           "add_first")
+                                                          (("1"
+                                                            (expand
+                                                             "insert?")
+                                                            (("1"
+                                                              (expand
+                                                               "rest")
+                                                              (("1"
+                                                                (expand
+                                                                 "^")
+                                                                (("1"
+                                                                  (expand
+                                                                   ">")
+                                                                  (("1"
+                                                                    (expand
+                                                                     "empty_seq"
+                                                                     -1)
+                                                                    (("1"
+                                                                      (hide-all-but
+                                                                       (-1
+                                                                        3))
+                                                                      (("1"
+                                                                        (assert)
+                                                                        nil
+                                                                        nil))
+                                                                      nil))
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil)
+                                                 ("2"
+                                                  (typepred "x!2")
+                                                  (("2"
+                                                    (expand
+                                                     "add_first")
+                                                    (("2"
+                                                      (expand
+                                                       "insert?")
+                                                      (("2"
+                                                        (expand "rest")
+                                                        (("2"
+                                                          (expand "^")
+                                                          (("2"
+                                                            (expand
+                                                             "empty_seq")
+                                                            (("2"
+                                                              (lift-if)
+                                                              (("2"
+                                                                (prop)
+                                                                (("1"
+                                                                  (hide-all-but
+                                                                   (-2
+                                                                    2))
+                                                                  (("1"
+                                                                    (assert)
+                                                                    nil
+                                                                    nil))
+                                                                  nil)
+                                                                 ("2"
+                                                                  (hide-all-but
+                                                                   (-2
+                                                                    2))
+                                                                  (("2"
+                                                                    (assert)
+                                                                    nil
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
                                 nil))
-                              nil)
-                             ("3" (hide 5)
-                              (("3"
-                                (expand "min")
-                                (("3"
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil)
+                   ("2" (case "add_first(first(x!1), rest(x!1)) = x!1")
+                    (("1" (replace -1 -2) (("1" (propax) nil nil)) nil)
+                     ("2" (expand "first")
+                      (("2" (expand "finseq_appl")
+                        (("2" (decompose-equality)
+                          (("1" (hide 2 4 -1)
+                            (("1" (expand "add_first")
+                              (("1"
+                                (expand "insert?")
+                                (("1"
+                                  (expand "rest")
+                                  (("1"
+                                    (expand "^")
+                                    (("1"
+                                      (lift-if)
+                                      (("1"
+                                        (prop)
+                                        (("1"
+                                          (expand "empty_seq")
+                                          (("1" (assert) nil nil))
+                                          nil)
+                                         ("2"
+                                          (expand "empty_seq")
+                                          (("2" (assert) nil nil))
+                                          nil)
+                                         ("3"
+                                          (expand "min")
+                                          (("3" (propax) nil nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil)
+                           ("2" (decompose-equality)
+                            (("2" (hide -1 2 4)
+                              (("2"
+                                (expand "add_first")
+                                (("2"
+                                  (expand "insert?")
+                                  (("2"
+                                    (lift-if)
+                                    (("2"
+                                      (prop)
+                                      (("1"
+                                        (replace -1 1)
+                                        (("1" (propax) nil nil))
+                                        nil)
+                                       ("2"
+                                        (expand "finseq_appl")
+                                        (("2"
+                                          (expand "rest")
+                                          (("2"
+                                            (expand "^")
+                                            (("2"
+                                              (lift-if)
+                                              (("2"
+                                                (prop)
+                                                (("1"
+                                                  (typepred "x!2")
+                                                  (("1"
+                                                    (expand
+                                                     "add_first")
+                                                    (("1"
+                                                      (expand
+                                                       "insert?")
+                                                      (("1"
+                                                        (expand "rest")
+                                                        (("1"
+                                                          (expand "^")
+                                                          (("1"
+                                                            (expand
+                                                             ">")
+                                                            (("1"
+                                                              (expand
+                                                               "empty_seq"
+                                                               -1)
+                                                              (("1"
+                                                                (lift-if)
+                                                                (("1"
+                                                                  (prop)
+                                                                  (("1"
+                                                                    (assert)
+                                                                    nil
+                                                                    nil)
+                                                                   ("2"
+                                                                    (assert)
+                                                                    nil
+                                                                    nil))
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil)
+                                                 ("2"
+                                                  (typepred "x!2")
+                                                  (("2"
+                                                    (expand
+                                                     "add_first")
+                                                    (("2"
+                                                      (expand
+                                                       "insert?")
+                                                      (("2"
+                                                        (expand "rest")
+                                                        (("2"
+                                                          (expand "^")
+                                                          (("2"
+                                                            (expand
+                                                             "empty_seq")
+                                                            (("2"
+                                                              (lift-if)
+                                                              (("2"
+                                                                (prop)
+                                                                (("1"
+                                                                  (assert)
+                                                                  nil
+                                                                  nil)
+                                                                 ("2"
+                                                                  (assert)
+                                                                  nil
+                                                                  nil))
+                                                                nil))
+                                                              nil))
+                                                            nil))
+                                                          nil))
+                                                        nil))
+                                                      nil))
+                                                    nil))
+                                                  nil))
+                                                nil))
+                                              nil))
+                                            nil))
+                                          nil))
+                                        nil))
+                                      nil))
+                                    nil))
+                                  nil))
+                                nil))
+                              nil))
+                            nil))
+                          nil))
+                        nil))
+                      nil))
+                    nil))
+                  nil))
+                nil)
+               ("2" (inst -1 "rest(x!1)")
+                (("2" (prop)
+                  (("2" (hide-all-but (1 3))
+                    (("2" (expand "rest")
+                      (("2" (lift-if)
+                        (("2" (prop)
+                          (("2" (expand "^")
+                            (("2" (lift-if)
+                              (("2"
+                                (prop)
+                                (("1"
+                                  (expand "empty_seq")
+                                  (("1" (assert) nil nil))
+                                  nil)
+                                 ("2"
+                                  (expand "empty_seq")
+                                  (("2" (assert) nil nil))
+                                  nil)
+                                 ("3"
                                   (hide-all-but 3)
-                                  (("3" (assert) nil nil))
+                                  (("3"
+                                    (expand "min")
+                                    (("3" (assert) nil nil))
+                                    nil))
                                   nil))
                                 nil))
                               nil))
@@ -2111,14 +2904,32 @@
     (fs_insertion_sort def-decl "finseq[nat]" binsertionsort nil)
     (fs_ins_and_add_in_perm_is_perm formula-decl nil binsertionsort
      nil)
-    (length_rest formula-decl nil seq_extras "structures/")
-    (seq_first_rest formula-decl nil seq_extras "structures/")
+    (= const-decl "[T, T -> boolean]" equalities nil)
+    (add_first const-decl "finseq" seq_extras "structures/")
+    (insert? const-decl "finseq" seq_extras "structures/")
+    (posint_plus_nnint_is_posint application-judgement "posint"
+     integers nil)
+    (^ const-decl "finseq" finite_sequences nil)
+    (min const-decl "{p: real | p <= m AND p <= n}" real_defs nil)
+    (real_ge_is_total_order name-judgement "(total_order?[real])"
+     real_props nil)
+    (odd_plus_even_is_odd application-judgement "odd_int" integers nil)
+    (int_minus_int_is_int application-judgement "int" integers nil)
+    (real_gt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (empty_seq const-decl "finseq" finite_sequences nil)
+    (NOT const-decl "[bool -> bool]" booleans nil)
+    (real_lt_is_strict_total_order name-judgement
+     "(strict_total_order?[real])" real_props nil)
+    (> const-decl "bool" reals nil)
+    (empty_0 formula-decl nil seq_extras "structures/")
+    (finseq_appl const-decl "[below[length(fs)] -> T]" finite_sequences
+     nil)
     (/= const-decl "boolean" notequal nil)
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
     (first const-decl "T" seq_extras "structures/")
-    (rest const-decl "finseq" seq_extras "structures/")
-    (posint_plus_nnint_is_posint application-judgement "posint"
-     integers nil))
+    (x!1 skolem-const-decl "finseq[nat]" binsertionsort nil)
+    (rest const-decl "finseq" seq_extras "structures/"))
    nil)
   (fs_insertion_sort_is_permutations-1 nil 3702633808
    ("" (measure-induct+ "length(s)" ("s"))
@@ -2144,7 +2955,7 @@
     nil)
    ((posint_plus_nnint_is_posint application-judgement "posint"
      integers nil)
-    (rest const-decl "finseq" seq_extras "structures/")
+    (rest const-decl "finseq" seq_extras "structures/") nil
     (first const-decl "T" seq_extras "structures/")
     (not_empty_seq type-eq-decl nil seq_extras "structures/")
     (/= const-decl "boolean" notequal nil)
