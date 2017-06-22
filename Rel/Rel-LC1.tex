@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+
+\usepackage{sbc-template}
+
+\usepackage{graphicx,url}
+\usepackage{bussproofs}
+\EnableBpAbbreviations
+
+\usepackage{indentfirst}
+
+%\usepackage[brazil]{babel}   
+\usepackage[latin1]{inputenc}  
+
+     
+\sloppy
+
+\title{Relatório Final - Lógica Computacional 1\inst{1}}
+
+\author{Marcelo Araújo - (150016794), Augusto Brandão - (160024366), Ian Nery - (150129670) }
+
+
+\address{Departamento de Ciência da Computação -- Universidade de Brasília (UNB)}
+
+\begin{document} 
+
+\maketitle
+
+\section*{Introdução}
+A lógica computacional, extenso campo de pesquisa e aplicações práticas, é primordialmente utilizada para a comprovação do funcionamento de sistemas críticos hodiernos, que a torna essencial tanto como especialização na área, quanto como introdução para outros âmbitos de pesquisa, como a de inteligência artificial. O objetivo do projeto em questão é principalmente introduzir os alunos a ferramentas de verificação e formalização para a melhor absorção e entendimento das técnicas de manipulação lógica apresentadas em sala, além de demonstrar como tais conceitos aprendidos são aplicados na prática.
+
+No projeto contido nesse relatório, é apresentado para a prova questões sobre propriedades envolvendo a inserção e ordenação de sequências. A ferramenta utilizada para a especificação e verificação formal da lógica por detrás de tais conjecturas é o PVS. O software mencionado é de grande importância para as aplicações práticas descritas acima e outras, como é possível constatar pelo diretório da NASA, que abarca diversas bibliotecas acerca de diversas conjecturas similares a apresentada no trabalho, com a finalidade de auxiliar os pesquisadores da área a ter um entendimento similar ao proposto pelo projeto.
+\section*{Explicação das soluções}
+\subsection*{Questão 1}
+A conjectura da questão 1, {\textit {fs\textunderscore insert\textunderscore in\textunderscore sorted\textunderscore preserves\textunderscore sort}} propõe que para todo s sequência finita e x natural, têm-se que a ordenação de s implica na ordenação de s após uma inserção de x em si. Para o início de sua prova, fora ultilizado um passo de indução forte para a sequência "s" e para a variável "length(s)", sendo essa a variável que define o tamanho da sequência finita "s". A estratégia primordial para a prova de tal conjectura foi a utilização da skolemização e instanciação, relatadas a regras referentes aos quantificadores universais da lógica de Gentzen; manipuladores equacionais com a finalidade de dissecar o problema para torná-lo trivial, como enunciado pelos comandos {\textbf {lift-if}}, {\textbf {replace}} e {\textbf {expand}}; manipuladores lógico-proposicionais, como {\textbf {prop}}; e também comandos com a função de cut, como {\textbf {case}} e {\textbf {lemma}}.
+\subsection*{Questão 2}
+A questão 2, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore sorted}}, é uma conjectura cuja proposição é: para toda sequência finita natural "s" têm-se que a inserção ordenada em "s" torna-se em uma sequência ordenada. Para a prova da conjectura, foi utilizado como na questão 1 a estratégia de indução forte, para as mesmas "s" e "length(s)", e além dos comandos de skolemização e instanciação, foram utilizados novamente os manipuladores equacionais {\textbf {lift-if}}, {\textbf {replace}} e {\textbf {expand}}; o manipulador lógico-proposicional {\textbf {prop}}; e por fim os comandos que exprimem a função cut, nesse caso {\textbf {case}}, {\textbf {rewrite}} e {\textbf {lemma}}.
+\subsection*{Questão 3}
+A questão 3, {\textit {fs\textunderscore ins\textunderscore and\textunderscore add\textunderscore in\textunderscore perm\textunderscore is\textunderscore perm}}, consiste na proposição que para quaisquer as sequências "s1" e "s2", que são permutações entre si, e para qualquer variável "x", têm que que a inserção de x no primeiro elemento da sequência s1 e a inserção de x dada pelo método {\textit {insertion}} em s2, s1 e s2 ainda são permutações(ACHO Q O CONCEITO TA ERRADO ME CORRIJAM AI CLÃ). O método para prova da conjectura foi o uso dos mesmos mecanismos da questão 2, além do comando {\textbf {typepred}}, cuja função é de apresentar restrições de tipo em expressões previamente estabelecidas.
+\subsection*{Questão 4}
+Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore permutations}}, representa que para cada sequência "s", a inserção ordenada em s e a sequência original s sofrem permutação. Na prova feita, foi utilizado o passo de indução forte como na questão 1, os métodos descritos nas questões 2 e 3, e também o comando de manipulação equacional {\textbf {decompose-equality}}, cuja função é decompor igualdades em componentes mais triviais para prova, como a decomposição de uma igualdade de sequência a separa em uma igualdade de sequências junto a uma igualdade de seus tamanhos.
+\section*{Especificação do problema e explicação do método de solução}
+	
+	Nesta etapa mostraremos os 
+
+	\subsection{Questão 1}
+	
+	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $issorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, x \ : finseq)$, $l$ abrevia $length(x \ : finseq)$.
+	
+		\begin{prooftree}\label{pr:1.1}
+			\AXC{$\nabla_1$}
+			\AXC{$\nabla_2$}
+			\AXC{$\nabla_3$}
+			\RightLabel{$(prop)$}
+			\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
+			\RightLabel{$R_{=}$}
+			\UIC{$ \Gamma , s?(x_1)\Rightarrow s?(i(x, x_1))$}
+			\RightLabel{$R_{\rightarrow}$}
+			\UIC{$\Gamma \Rightarrow s?(x_1) \rightarrow s?(i(x,x_1))$}
+			\RightLabel{$R_{\forall} \ e \ (LW)$}
+			\UIC{$\forall_y \forall_x \ (l(y) < l(x_1)) \rightarrow s?(y) \rightarrow s?(i(x,y)) \Rightarrow \forall_x s?(x_1) \rightarrow s?(i(x,x_1))$}
+			\RightLabel{$(mi+)$}
+			\UIC{$\Rightarrow \forall_{s, x} \ s?(s) \rightarrow s?(i(x, s))$}
+		\end{prooftree}
+		
+	onde$\Delta_1$ 
+
+\section*{Descrição da formalização}
+
+\section*{Conclusões}
+A partir da prova lógica das quatro conjecturas auxiliares apresentadas, é possível provar a funcionalidade da função {\textit {fs\textunderscore insertion\textunderscore sort}} empregada como lema no apêndice do trabalho, visto que as questões posteriormente demonstradas são propriedades referentes ao mecanismo de inserção e identificação da ordenação das sequências apresentadas, a prova aplicada da função citada se compõe dos comandos de skolemização da expressão seguida da instanciação do quantificador existencial em variáveis já presentes na expressão sucedida, e então o comando de cut {\textbf{rewrite}} para aplicação dos lemas {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore sorted}} e {\textit {fs\textunderscore insertion\textunderscore sort\textunderscore is\textunderscore permutations}}; sendo tais lemas as conjecturas provadas posteriormente pelas questões 2 e 4. 
+
+Apesar dos problemas do trabalho designado serem de relativa simplicidade para alguém especializado na área, estes foram fator determinante para a percepção dos integrantes sobre a importância e abrangência de usos da dedução natural e cálculo sequente, independente do software utilizado para a aplicação da teoria. 
+\section*{Referências}
+
+Bibliographic references must be unambiguous and uniform.  We recommend giving
+the author names references in brackets, e.g. \cite{knuth:84},
+\cite{boulic:91}, and \cite{smith:99}.
+
+\bibliographystyle{sbc}
+\bibliography{sbc-template}
+
+\end{document}
