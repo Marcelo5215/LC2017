@@ -1,6 +1,7 @@
 \documentclass[12pt]{article}
 
 \usepackage{sbc-template}
+\usepackage{amsmath}
 
 \usepackage{graphicx,url}
 \usepackage{bussproofs}
@@ -40,11 +41,11 @@ A questão 3, {\textit {fs\textunderscore ins\textunderscore and\textunderscore a
 Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore permutations}}, representa que para cada sequência "s", a inserção ordenada em s e a sequência original s sofrem permutação. Na prova feita, foi utilizado o passo de indução forte como na questão 1, os métodos descritos nas questões 2 e 3, e também o comando de manipulação equacional {\textbf {decompose-equality}}, cuja função é decompor igualdades em componentes mais triviais para prova, como a decomposição de uma igualdade de sequência a separa em uma igualdade de sequências junto a uma igualdade de seus tamanhos.
 \section*{Especificação do problema e explicação do método de solução}
 	
-	Nesta etapa mostraremos os 
+	Nesta etapa mostraremos o desenvolvimento das provas e suas relações com a dedução natural no cálculo de Gentzen.
 
 	\subsection{Questão 1}
 	
-	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $issorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, x \ : finseq)$, $l$ abrevia $length(x \ : finseq)$.
+	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $is.sorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, x \ : finseq)$, $l$ abrevia $length(x \ : finseq)$.
 	
 		\begin{prooftree}\label{pr:1.1}
 			\AXC{$\nabla_1$}
@@ -52,37 +53,61 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 			\AXC{$\nabla_3$}
 			\RightLabel{$(prop)$}
 			\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
-			\RightLabel{$R_{=}$}
+			\RightLabel{$(R_{=})$}
 			\UIC{$ \Gamma , s?(x_1)\Rightarrow s?(i(x, x_1))$}
-			\RightLabel{$R_{\rightarrow}$}
+			\RightLabel{$(R_{\rightarrow})$}
 			\UIC{$\Gamma \Rightarrow s?(x_1) \rightarrow s?(i(x,x_1))$}
-			\RightLabel{$R_{\forall} \ e \ LW$}
+			\RightLabel{$(R_{\forall}) \ e \ (LW)$}
 			\UIC{$\forall_y \forall_x \ (l(y) < l(x_1)) \rightarrow s?(y) \rightarrow s?(i(x,y)) \Rightarrow \forall_x s?(x_1) \rightarrow s?(i(x,x_1))$}
 			\RightLabel{$(mi+)$}
 			\UIC{$\Rightarrow \forall_{s, x} \ s?(s) \rightarrow s?(i(x, s))$}
 		\end{prooftree}
-	
-	%	\begin{prooftree}
-	%		\AXC{$A$}
-	%		\AXC{$B$}
-	%		\AXC{$B$}
-	%		\AXC{$B$}
-	%		\RightLabel{$1$}
-	%		\QIC{$C$}
-	%		\AXC{$U$}
-	%		\AXC{$K$}
-	%		\RightLabel{$2$}
-	%		\BIC{$O$}
-	%		\RightLabel{$3$}
-	%		\BIC{$J$}
-	%	\end{prooftree}
-	
-	%\begin{equation}
-	%	d = \sqrt{(x^2 + y^2)}
-	%\end{equation}
 		
-	onde $\Delta_1$ 
-
+	Onde $\Delta_1$ foi usado para abreviar a igualdade usada por ($R_{=}$)
+	
+	\begin{equation}
+		\begin{split}
+		\Delta_1 = IF \ l(x_1) = 0 \ THEN s?(addf(x,x_1)) \qquad \qquad\\
+		ELSE \ IF \ x \le f(x_1) \ THEN \ s?(addf(x,x_1)) \ \ \\
+		ELSE \ s?(addf(f(x_1), i(x,rest(x_1))) \qquad \qquad
+		\end{split}
+	\end{equation}
+	
+	Agora podemos explicar o uso do comando $prop$ em nossa prova para obtermos os ramos $\nabla_{1,2,3}$, a estrutura de $if, then \ else$ pode ser interpretada como uma série de implicações, como no exemplo de $\Delta_1$, temos, $l(x_1) = 0 \rightarrow s?(addf(x,x_1))$, como uma primeira implicação, $(\neg{(l(x_1) = 0)} \wedge x \le f(x_1) )\rightarrow s?(addf(x,x_1))$, e temos uma terceira implicação que correspode ao caso que nenhuma das duas condições dos $if's$ são verdadeiras,  $(\neg{((l(x_1) = 0) \wedge x \le f(x_1))} )\rightarrow s?(addf(x,x_1))$ .
+	
+	Utilizando o comando $prop$ nessa estrutura obtemos 3 ramos, prove nientes da utilização de comando como $flatten$, $split$, assim expandindo o $prop$ utilizado acima podemos ver as seguintes provas:
+	
+	\begin{prooftree}\label{pr:n1}
+		\AXC{$\nabla'_1$}
+		\UIC{$\Gamma , l(x_1)=0, s?(x_1)\Rightarrow s?(addf(x,x_1))$}
+		\AXC{$\nabla_2$}
+		\AXC{$\nabla_3$}
+		\RightLabel{$(prop)$}
+		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
+	\end{prooftree}
+	
+	\begin{prooftree}\label{pr:n2}
+		\AXC{$\nabla_1$}
+		\AXC{$\nabla'_2$}
+		\UIC{$\Gamma , x \le f(x_1), s?(x_1)\Rightarrow s?(addf(x,x_1), \ l(x_1)=0$}
+		\AXC{$\nabla_3$}
+		\RightLabel{$(prop)$}
+		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
+	\end{prooftree}
+	
+	\begin{prooftree}\label{pr:n3}
+		\AXC{$\nabla_1$}
+		\AXC{$\nabla_2$}
+		\AXC{$\nabla'_3$}
+		\UIC{$\Gamma, s?(x_1)\Rightarrow s?(addf(x,x_1), \ l(x_1)=0, x \le f(x_1)$}
+		\RightLabel{$(prop)$}
+		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
+	\end{prooftree}
+	
+	Assim, isso nos dá 3 objetivos para provar, o primeiro representado por $\nabla'_1$, onde queremos provar que para uma sequência $x_1$ de tamanho 0, vazia, a adição de um natural x em uma lista vazia resultan em uma lista ordenada, no caso a lista resultante tera apenas um elemento, estando ordenada, uma serie de $expand$, $(R_=)$ e $(L_=)$ no cáculo de Gentzen .
+	
+	
+	
 \section*{Descrição da formalização}
 
 \section*{Conclusões}
