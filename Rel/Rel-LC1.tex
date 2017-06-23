@@ -43,7 +43,7 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 	
 	Nesta etapa mostraremos o desenvolvimento das provas e suas relações com a dedução natural no cálculo de Gentzen. Omitiremos certos passos com a finalidade de manter a prova legível, como certos comandos de $expand$, passos omitidos serão sinalizados adequadamente quando necessários, além disso, fórmulas escondidas com a mesma finalidade estarão representadas como $\Gamma$ do lado esquedo do sequente e como $\Delta$ do lado direito do sequente.
 
-	\subsection{Questão 1}
+	\subsection*{Questão 1}
 	
 	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $is.sorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, y \ : finseq)$, $l$ abrevia $length(x \ : finseq)$, $s$ abrevia $seq(.)$, $af$ abrevia $addfirst(x \ : nat , y \ : finseq)$.
 	
@@ -181,18 +181,198 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 		\BIC{$\Gamma, s?(i(x,r(x_1))), s?(x_1) \Rightarrow s?(af(f(x,x_1), i(x, r(x_1)))), \Delta$}
 	\end{prooftree}
 	
-\section*{Descrição da formalização}
+\subsection*{Questão 2}
+
+Utilizaremos novamente as abreviações: $s?$ abrevia $is.sorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, y \ : finseq)$, $l$ abrevia $length(x \ : finseq)$, $s$ abrevia $seq(.)$, $f$ abrevia $first(y \ : finseq)$, $fis$ abrevia $(fs\textunderscore insertion\textunderscore sort(x \ : \ finseq))$, $r$ abrevia $(rest(x \ : \ finseq))$, também sabendo que $min, p$ são funções decorrentes da manipulação equacional, e $eseq$ o lema $empty_seq$
+
+\begin{prooftree}
+
+\AXC {$\nabla_1$}
+
+\AXC {$\nabla_2$}
+
+\RightLabel{$(prop)$}
+
+\BIC {$\forall_y \ l(y) < l(x!1) \rightarrow s?(fis(y)) \Rightarrow \Delta_1 $}
+
+\RightLabel {$(R_=)$}
+
+\UIC {$\forall_y \ l(y) < l(x!1) \rightarrow s?(fis(y)) \Rightarrow s?(fis(x!1))$}
+
+\RightLabel {$(mi+)$}
+
+\UIC {$\forall_y \ s?(fis(s))$}
+
+\end{prooftree}
+
+Sendo $\Delta_1$ o resultado da manipulação equacional da expressão $s?(fis(x!1))$, demonstrada na árvore pelo símbolo $(R_=)$, tal que descreve a seguinte função:
+
+\begin{equation}
+	\begin{split}	
+		\Delta_1 = IF \ l(x_1) = 0 \ THEN s?(x!1)) \qquad \qquad\\	
+		ELSE \ s?(i(f(x!1))), fis(r(x!1)) \qquad \qquad
+	\end{split}
+\end{equation}
+
+
+Após a utilização do comando $prop$ na prova, temos as proposições definidas pelos ramos $\nabla_{1,2}$, e como podemos interpretar a estrutura $if, then else$ como séries de implicações, temos que $\nabla_1$ exprime a proposição $l(x!1) = 0 \ \rightarrow \ s?(x!1)$, e na proposição de $\nabla_2$ temos que $ \neg (l(x!1) = 0) \ \rightarrow \ s?(i(f(x!1))), fis(r(x!1))$.
+
+
+Temos que a continuação do galho de $\nabla_1$:
+
+\begin{prooftree}
+
+\AXC {$\perp \ \Rightarrow \ $}
+
+\RightLabel {$L_\perp $}
+
+\UIC {$k \ \le \ -2 \ \Rightarrow $}
+
+\RightLabel {$RW, LW$}
+
+\UIC {$l(x!1) = 0, \ k \le 0 - 2 \ \Rightarrow \ x!1`seq(k) \ \le \ x!1`seq(k+1) $}
+
+\RightLabel {$L_=$}
+
+\UIC {$l(x!1) = 0, \ k \le l(x!1) - 2 \ \Rightarrow \ x!1`seq(k) \ \le \ x!1`seq(k+1) $}
+
+\RightLabel {$R_=$}
+
+\UIC {$l(x!1) = 0, \ k \le l(x!1) - 2 \ \Rightarrow \ finseq\textunderscore appl(x!1) (k) \ \le \ finseq\textunderscore appl(x!1) (k + 1)   $}
+
+\RightLabel {$R_{\forall}$}
+
+\UIC {$l(x!1) = 0 \ \Rightarrow \forall_{k < l(x!1)} \  k \ \le \ (l(x!1) - 2) \ \rightarrow \ finseq\textunderscore appl(x!1) (k) \ \le \ finseq\textunderscore appl(x!1) (k + 1) $}
+
+\RightLabel {$R_=$}
+
+\UIC {$l(x!1) = 0 \ \Rightarrow s?(x!1) \ $}
+
+\end{prooftree}
+
+Tendo como observação que o uso da regra sequente $R_=$ como manifestação dos comandos de manipulação equacional \textbf{expand, replace} e o uso da regra sequente $R_\forall$ como representação do comando \textbf{skeep}.
+
+
+Já para o galho de $\nabla_2$, temos:
+
+\begin{prooftree}
+
+\AXC {$\forall_{y : finseq , \ x: nat} \ s?(y) \rightarrow s?(i(x,s))$}
+
+\RightLabel {$cut$}
+
+\UIC {$s?(fis(r(x!1))) \ \Rightarrow \  l(x!1) = 0, \ s?(i(f(x!1)), fis(r(x!1))) $}
+
+\AXC {$\nabla_3$}
+
+\RightLabel {$prop$}
+
+\BIC {$l(r(x!1)) < l(x!1) \rightarrow s?(fis(r(x!1))) \ \Rightarrow \ l(x!1) = 0, \ s?(i(f(x!1)), fis(r(x!1)))  $}
+
+\RightLabel {$L_\forall$}
+
+\UIC {$\forall_y \ l(y) < l(x!1) \rightarrow s?(fis(y)) \ \Rightarrow \ l(x!1) = 0, \ s?(i(f(x!1)), fis(r(x!1))) $}
+
+\end{prooftree}	
+
+Enquanto a $\nabla_3$ se expande para:
+
+\begin{prooftree}
+
+
+
+\AXC {$1 > x!1`l - 1  \Rightarrow \perp$}
+
+\RightLabel {$R_\perp$}
+
+\UIC {$\Delta_5$}
+
+\AXC {$1 \ge x!1`l - 1  \Rightarrow \perp$}
+
+\RightLabel {$R_\perp$}
+
+\UIC {$\Delta_6$}
+
+\AXC {$\Rightarrow \perp $}
+
+\RightLabel {$R_\perp$}
+
+\UIC {$ \Rightarrow x!1`l-1 < l(x!1) $}
+
+\RightLabel {$R_=, RW$}
+
+\UIC {$\Delta_7$}
+
+\RightLabel {$prop$}
+
+\TIC {$\Rightarrow x!1`l = 0, \Delta_4 $}
+
+\RightLabel {$R_=, RW $}
+
+\UIC {$\Rightarrow x!1`l = 0, l(x!1) = 0, \ \Delta_3 $}
+
+\RightLabel {$prop$}
+
+\UIC {$\Rightarrow \Delta_2, \ l(x!1) = 0 $}
+
+\RightLabel {$R_=$}
+
+\UIC {$\Rightarrow \  l(r(x!1)) < l(x!1), \ l(x!1) = 0$}
+
+\RightLabel {$RW$}
+
+\UIC {$\Rightarrow \  l(r(x!1)) < l(x!1), \ l(x!1) = 0, \ s?(i(f(x!1)), fis(r(x!1)))$}
+
+
+\end{prooftree}
+
+Sendo
+
+\begin{equation}
+	\begin{split}	
+		\Delta_2 = IF \ x!1`l = 0 \  THEN \  x!1`l \qquad \qquad\\
+		ELSE \ (x!1 \ p \ (1, x!1`l - 1))`l \qquad \qquad
+	\end{split}
+\end{equation}
+
+,
+
+\begin{equation}
+\Delta_3 = (x!1 \ p \ (1, x!1`l - 1))`l < l(x!1)
+\end{equation}
+
+,
+
+\begin{equation}
+\begin{split}	
+\Delta_4 = IF \ 1> x!1`l -1 \ OR \ 1 \ge x!1`l \  THEN \  eseq`l \qquad \qquad\\
+ELSE \ m(x!1`l - 1, x!1`l - 1) < l(x!1) \qquad \qquad
+\end{split}
+\end{equation}
+
+\begin{equation}
+\Delta_5 = 1 > x!1`l - 1 \Rightarrow eseq`l  < l(x!1), \ x!1`l = 0
+\end{equation}
+
+\begin{equation}
+\Delta_6 = 1 \ge x!1`l - 1 \Rightarrow eseq`l  < l(x!1), \ x!1`l = 0
+\end{equation}
+
+\begin{equation}
+\Delta_7 = \Rightarrow 1>x!1`l-1 \ , \ 1 \ge x!1`l \ , \ x!1`l = 0 \ , \ m(x!1`l - 1, x!1`l - 1) < l(x!1)
+\end{equation}
 
 \section*{Conclusões}
 A partir da prova lógica das quatro conjecturas auxiliares apresentadas, é possível provar a funcionalidade da função {\textit {fs\textunderscore insertion\textunderscore sort}} empregada como lema no apêndice do trabalho, visto que as questões posteriormente demonstradas são propriedades referentes ao mecanismo de inserção e identificação da ordenação das sequências apresentadas, a prova aplicada da função citada se compõe dos comandos de skolemização da expressão seguida da instanciação do quantificador existencial em variáveis já presentes na expressão sucedida, e então o comando de cut {\textbf{rewrite}} para aplicação dos lemas {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore sorted}} e {\textit {fs\textunderscore insertion\textunderscore sort\textunderscore is\textunderscore permutations}}; sendo tais lemas as conjecturas provadas posteriormente pelas questões 2 e 4. 
 
 Apesar dos problemas do trabalho designado serem de relativa simplicidade para alguém especializado na área, estes foram fator determinante para a percepção dos integrantes sobre a importância e abrangência de usos da dedução natural e cálculo sequente, independente do software utilizado para a aplicação da teoria. 
 \section*{Referências}
+	
+	\begin{itemize}
+	\item	Mauricio Ayala-Rincón and Flávio L.C de Moura, \ Applied Logic for Computer Scientists, computacional deduction and formal proffs, \ 2017 , chapters 3-4, pages 107-192
+		
+	\item	PVS, Prover Guide, pvs.csl.sri.com/doc/pvs-prover-guide.pdf
+	\end{itemize}
 
-
-
-\bibliographystyle{sbc}
-\bibliography{./sbc-template}
-\cite{ayala}
 
 \end{document}

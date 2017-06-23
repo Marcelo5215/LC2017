@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.13)  23 JUN 2017 16:44
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.13)  23 JUN 2017 18:36
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -409,24 +409,54 @@ Overfull \hbox (30.43936pt too wide) in paragraph at lines 171--182
  [] 
  []
 
-(./Rel-LC1.bbl)
 
-LaTeX Warning: Citation `ayala' on page 5 undefined on input line 196.
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 186.
 
-[5] (./Rel-LC1.aux)
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 186.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 241.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 241.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 245.
+
+
+LaTeX Warning: Command \textunderscore invalid in math mode on input line 245.
+
+
+Overfull \hbox (71.0493pt too wide) in paragraph at lines 251--251
+ [][] 
+ []
+
+[5]
+Overfull \hbox (0.81566pt too wide) in paragraph at lines 276--276
+ [][] 
+ []
+
+[6]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 372.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/omsptm.fd
+File: omsptm.fd 
+)
+LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 372.
+ [7]
+(./Rel-LC1.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.28pt have occurred.
 
-
-LaTeX Warning: There were undefined references.
-
  ) 
 Here is how much of TeX's memory you used:
- 3956 strings out of 494953
- 56654 string characters out of 6180976
- 130116 words of memory out of 5000000
- 7178 multiletter control sequences out of 15000+600000
+ 3965 strings out of 494953
+ 56852 string characters out of 6180976
+ 131104 words of memory out of 5000000
+ 7187 multiletter control sequences out of 15000+600000
  18489 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  43i,14n,40p,1019b,219s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -440,10 +470,10 @@ fonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rel-LC1.pdf (5 pages, 124854 bytes).
+Output written on Rel-LC1.pdf (7 pages, 134321 bytes).
 PDF statistics:
- 61 PDF objects out of 1000 (max. 8388607)
- 43 compressed objects within 1 object stream
+ 69 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
