@@ -36,7 +36,7 @@ A conjectura da questão 1, {\textit {fs\textunderscore insert\textunderscore in\
 \subsection*{Questão 2}
 A questão 2, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore sorted}}, é uma conjectura cuja proposição é: para toda sequência finita natural "s" têm-se que a inserção ordenada em "s" torna-se em uma sequência ordenada. Para a prova da conjectura, foi utilizado como na questão 1 a estratégia de indução forte, para as mesmas "s" e "length(s)", e além dos comandos de skolemização e instanciação, foram utilizados novamente os manipuladores equacionais {\textbf {lift-if}}, {\textbf {replace}} e {\textbf {expand}}; o manipulador lógico-proposicional {\textbf {prop}}; e por fim os comandos que exprimem a função cut, nesse caso {\textbf {case}}, {\textbf {rewrite}} e {\textbf {lemma}}.
 \subsection*{Questão 3}
-A questão 3, {\textit {fs\textunderscore ins\textunderscore and\textunderscore add\textunderscore in\textunderscore perm\textunderscore is\textunderscore perm}}, consiste na proposição que para quaisquer as sequências "s1" e "s2", que são permutações entre si, e para qualquer variável "x", têm que que a inserção de x no primeiro elemento da sequência s1 e a inserção de x dada pelo método {\textit {insertion}} em s2, s1 e s2 ainda são permutações(ACHO Q O CONCEITO TA ERRADO ME CORRIJAM AI CLÃ). O método para prova da conjectura foi o uso dos mesmos mecanismos da questão 2, além do comando {\textbf {typepred}}, cuja função é de apresentar restrições de tipo em expressões previamente estabelecidas.
+A questão 3, {\textit {fs\textunderscore ins\textunderscore and\textunderscore add\textunderscore in\textunderscore perm\textunderscore is\textunderscore perm}}, consiste na proposição que para quaisquer as sequências "s1" e "s2", que são permutações entre si, e para qualquer variável "x", têm que que a inserção de x no primeiro elemento da sequência s1 e a inserção de x dada pelo método {\textit {insertion}} em s2, s1 e s2 ainda são permutações. O método para prova da conjectura foi o uso dos mesmos mecanismos da questão 2, além do comando {\textbf {typepred}}, cuja função é de apresentar restrições de tipo em expressões previamente estabelecidas.
 \subsection*{Questão 4}
 Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore permutations}}, representa que para cada sequência "s", a inserção ordenada em s e a sequência original s sofrem permutação. Na prova feita, foi utilizado o passo de indução forte como na questão 1, os métodos descritos nas questões 2 e 3, e também o comando de manipulação equacional {\textbf {decompose-equality}}, cuja função é decompor igualdades em componentes mais triviais para prova, como a decomposição de uma igualdade de sequência a separa em uma igualdade de sequências junto a uma igualdade de seus tamanhos.
 \section*{Especificação do problema e explicação do método de solução}
@@ -75,7 +75,7 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 	
 	Agora podemos explicar o uso do comando $prop$ em nossa prova para obtermos os ramos $\nabla_{1,2,3}$, a estrutura de $if, then \ else$ pode ser interpretada como uma série de implicações, como no exemplo de $\Delta_1$, temos, $l(x_1) = 0 \rightarrow s?(af(x,x_1))$, como uma primeira implicação, $(\neg{(l(x_1) = 0)} \wedge x \le f(x_1) )\rightarrow s?(af(x,x_1))$, e temos uma terceira implicação que correspode ao caso que nenhuma das duas condições dos $if's$ são verdadeiras,  $(\neg{((l(x_1) = 0) \wedge x \le f(x_1))} )\rightarrow s?(af(x,x_1))$ .
 	
-	Utilizando o comando $prop$ nessa estrutura obtemos 3 ramos, prove nientes da utilização de comando como $flatten$, $split$, assim expandindo o $prop$ utilizado acima podemos ver as seguintes provas:
+	Utilizando o comando $prop$ nessa estrutura obtemos 3 ramos, provenientes da utilização de comandos como $flatten$, $split$ sucetivamente, assim expandindo o $prop$ utilizado acima podemos ver as seguintes provas:
 	
 	\begin{prooftree}\label{pr:n1}
 		\AXC{$\nabla'_1$}
@@ -104,6 +104,8 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
 	\end{prooftree}
 	
+	Os comando $split$ aplica as regras de $L_\vee$, $R_\wedge$, e $R_\rightarrow$, e o comando $flatten$ as regras de $R_\vee$, $L_\wedge$, e $L_\rightarrow$, e vemos que são essas exatas regras aplicadas aos sequentes da questão em si.
+	
 	Assim, isso nos dá 3 objetivos para provar, o primeiro representado por $\nabla'_1$, onde queremos provar que para uma sequência $x_1$ de tamanho 0, vazia, a adição de um natural x em uma lista vazia resultam em uma lista ordenada, no caso a lista resultante tera apenas um elemento, estando ordenada, a prova deste ramo pode ser concluída sem maiores dificuldades com os comando apresentados.
 	
 	Para o $\nabla'_2$ temos o objetivo de provar que para uma lista $x_1$ que está ordenada, com tamanho diferente de 0, a adição de um elemento menor ou igual ao primeiro elemento de $x_1$ no indíce 0 resulta em uma lista ordenada. Podemos ver que se a lista está ordenada e o elemento a ser inserido e menor ou igual ao primeiro de $x_1$ adicioná-lo na primeira posição mantém a ordenação.
@@ -119,11 +121,65 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 		\UIC{$\Gamma , x \le f(x_1), s?(x_1)\Rightarrow s?(af(x,x_1)), \ l(x_1)=0$}
 	\end{prooftree}
 	
-	Interessante desta prova é a utilização da regra de $Cut$, no caso utilizamos $k=0$, assim teremos um ramo provado por $\nabla_5$ que indica que o valor de $k$ é 0 oque nos dá realizando expansões que o primeiro elemento, $af(x,x_1).s(0) \le af(x,x_1).s(1)$, expandindo temos $x \le x_1.s(0)$ do lado direito do sequente, e temos exatamente isso do lado esquerdo também, dentro do $\Gamma$, assim fechamos este ramo.
+	Interessante desta prova é a utilização da regra de $Cut$, no caso utilizamos $k=0$, onde $k$ seria o índice de acesso na sequência, assim teremos um ramo provado por $\nabla_5$ que indica que o valor de $k$ é 0 oque nos dá realizando expansões que o primeiro elemento, $af(x,x_1).s(0) \le af(x,x_1).s(1)$, expandindo temos $x \le x_1.s(0)$ do lado direito do sequente, e temos exatamente isso do lado esquerdo também, dentro do $\Gamma$, assim fechamos este ramo.
 	
 	\begin{equation}
 		\Gamma, x \le x_1.s(0) \Rightarrow x \le x_1.s(0), \Delta \quad (Ax)
 	\end{equation}
+	
+	Para $\nabla_4$ temos um quantificador universal a direita, $\forall_k k \le l(x_1)-2 \rightarrow x_1.s(k) \le x_1.s(k+1)$, e agora precisamos usá-lo para provar que os elementos de índice $k$ são menores que $k+1$ com $k$ maior que 0, podemos notar que com esse íncide maior que 1 para a lista nova, $af(x,x_1)$ temos os mesmos elementos da lista $x_1$, que está ordenada, $\Gamma, s?(x_1)$. Utilizamos o comando $inst(``k-1'')$ para remover o quantificador gerado pela definição de is\textunderscore sorted?, $(L_\forall)$. Também temos que remover a implicação presente na fórmula do antecedente, usamos a regra $(L_\rightarrow)$, assim temos mais 2 objetivos para provar, um objetivo provando que o valor de $k$ é valido, e definitivamente que a lista em si está ordenana, como mencionado anteriormente.
+	
+	\begin{prooftree}
+		\AXC{$\nabla_i$}
+		\AXC{$\nabla_j$}
+		\UIC{$\Gamma, x_1.s(k-1) \le x_1.s(k) \Rightarrow k=0, \ af(x,x_1).s(k) \le af(x,x_1).s(k+1), \Delta $}
+		\RightLabel{$L_\rightarrow$}
+		\BIC{$\Gamma, (k-1)\le l(x_1)-2 \rightarrow x_1.s(k-1) \le x_1.s(k) \Rightarrow \Delta$}
+	\end{prooftree}
+			
+		\begin{prooftree}
+			\AXC{$\nabla'_i$}
+			\UIC{$\Gamma, (k-1)\le l(x_1)-2 \Rightarrow k-1 \le l(x_1)-2$}
+			\AXC{$\nabla'_j$}
+			\RightLabel{$L_\rightarrow$}
+			\BIC{$\Gamma, (k-1)\le l(x_1)-2 \rightarrow x_1.s(k-1) \le x_1.s(k) \Rightarrow \Delta$}
+		\end{prooftree}
+	
+	Agora para terminarmos a prova da questão 1 precisamos apenas provar $\nabla'_3$, 
+	utilizando a nossa hípotese de indução gerada pelo $measure-induct+$ que estava omitida em $\Gamma$, $\forall_y \forall_x \ (l(y) < l(x_1)) \rightarrow s?(y) \rightarrow s?(i(x,y))$, utilizamos a regra $(L_\forall)$ duas vezes entao teremos:
+	
+	\begin{prooftree}
+		\AXC{$\nabla_6$}
+		\UIC{$\Gamma \Rightarrow (l(r(x_1)) < l(x_1)), \Delta$}
+		\AXC{$\nabla_7$}
+		\UIC{$\Gamma, s?(x_1) \Rightarrow s?(r(x_1))\Delta$}
+		\AXC{$\nabla_8$}
+		\UIC{$\Gamma, s?(i(x,r(x_1)))\Rightarrow \Delta$}
+		\RightLabel{$(L_{\rightarrow})$}
+		\TIC{$(l(r(x_1)) < l(x_1)) \rightarrow s?(r(x_1)) \rightarrow s?(i(x,r(x_1)))
+			\Rightarrow \Delta$}
+		\RightLabel{$(L_\forall)^{2\times}$}
+		\UIC{$\Gamma, \forall_y \forall_x \ (l(y) < l(x_1)) \rightarrow s?(y) \rightarrow s?(i(x,y)) \Rightarrow s?(af(f(x,x_1), i(x, r(x_1)))), \Delta$ }
+	\end{prooftree}
+	
+	$\nabla_6$ consiste em provar que o tamanho do resto de $x_1$ é menor que o tamanho de $x_1$, pode ser provado com algumas expansões e o lemaa $empty_seq$, que é a aplicação da regra $(Cut)$.
+	
+	$\nabla_7$ consiste em provar que se $x_1$ está ordenada o resto de $x_1$ também está.
+	
+	E então o caso mais complicado, $\nabla_8$ se resume em provar que se o natural $x$ foi inserido em $r(x_1)$ e permaneceu ordenado, a adição do $f(x_1)$ nesta lista inserida mantém a propriedade de ordenada. Utilizamos a regra $Cut$, usando $l(r(x_1) = 0)$, assim temos 2 objetivos, provar que se isto for verdade temos uma lista de 2 elementos $[f(x_1), x]$ está ordenada, como sabemos que $x > f(x_1)$ isso está correto, para o segundo objetivo vai se resumir, com algumas manipulações em provar que $f(x_1) \le f(i(x, r(x_1)))$, assim temos que provar para os casos de $x$ ter sido inserido no primeiro índice do resto de $x_1$, assim teremos $f(x_1) \le x$, e para o caso em que x foi inserido após isso tendo, $f(x_1 \le f(r(x_1)))$, com as inforções que temos de $s?(x_1)$ e $s?(i(x, r(x_1)))$ a prova pode ser concluída fácilmente.
+	
+	\begin{prooftree}
+		\AXC{$\nabla$}
+		\UIC{$\Gamma \Rightarrow f(x_1) \le f(i(x, r(x_1))), \Delta$}
+		\AXC{$\nabla$}
+		\UIC{$\Gamma \Rightarrow f(x_1 \le f(r(x_1))), \Delta$}
+		\BIC{$\vdots$}
+		\UIC{$\Gamma \Rightarrow l(r(x_1))=0, \Delta$}
+		\AXC{$\nabla$}
+		\UIC{$\Gamma, l(r(x_1))=0 \Rightarrow \Delta$}
+		\RightLabel{$Cut$}
+		\BIC{$\Gamma, s?(i(x,r(x_1))), s?(x_1) \Rightarrow s?(af(f(x,x_1), i(x, r(x_1)))), \Delta$}
+	\end{prooftree}
 	
 \section*{Descrição da formalização}
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.13)  23 JUN 2017 12:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015/Debian) (preloaded format=pdflatex 2016.11.13)  23 JUN 2017 15:25
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -390,21 +390,35 @@ ermutations\OT1/ptm/m/n/12 , rep-re-senta que para cada
 \myCenter3=\dimen161
 \myScoreEnd3=\dimen162
 [2]
-Overfull \hbox (42.57869pt too wide) in paragraph at lines 111--120
+Overfull \hbox (42.57869pt too wide) in paragraph at lines 113--122
  [] 
  []
 
 [3]
-
-LaTeX Warning: Citation `knuth:84' on page 4 undefined on input line 137.
-
-
-LaTeX Warning: Citation `boulic:91' on page 4 undefined on input line 138.
+Overfull \hbox (4.8787pt too wide) in paragraph at lines 132--138
+ [] 
+ []
 
 
-LaTeX Warning: Citation `smith:99' on page 4 undefined on input line 138.
+Overfull \hbox (20.02217pt too wide) in paragraph at lines 151--163
+ [] 
+ []
 
-(./Rel-LC1.bbl) [4] (./Rel-LC1.aux)
+[4]
+Overfull \hbox (30.43936pt too wide) in paragraph at lines 171--182
+ [] 
+ []
+
+
+LaTeX Warning: Citation `knuth:84' on page 5 undefined on input line 193.
+
+
+LaTeX Warning: Citation `boulic:91' on page 5 undefined on input line 194.
+
+
+LaTeX Warning: Citation `smith:99' on page 5 undefined on input line 194.
+
+(./Rel-LC1.bbl) [5] (./Rel-LC1.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.28pt have occurred.
@@ -416,7 +430,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  3958 strings out of 494953
  56678 string characters out of 6180976
- 132116 words of memory out of 5000000
+ 130116 words of memory out of 5000000
  7180 multiletter control sequences out of 15000+600000
  18489 words of font info for 46 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -431,10 +445,10 @@ fonts/cm/cmsy10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/
 cm/cmsy8.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on Rel-LC1.pdf (4 pages, 118459 bytes).
+Output written on Rel-LC1.pdf (5 pages, 125174 bytes).
 PDF statistics:
- 58 PDF objects out of 1000 (max. 8388607)
- 41 compressed objects within 1 object stream
+ 61 PDF objects out of 1000 (max. 8388607)
+ 43 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
