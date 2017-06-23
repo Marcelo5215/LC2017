@@ -41,11 +41,11 @@ A questão 3, {\textit {fs\textunderscore ins\textunderscore and\textunderscore a
 Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\textunderscore permutations}}, representa que para cada sequência "s", a inserção ordenada em s e a sequência original s sofrem permutação. Na prova feita, foi utilizado o passo de indução forte como na questão 1, os métodos descritos nas questões 2 e 3, e também o comando de manipulação equacional {\textbf {decompose-equality}}, cuja função é decompor igualdades em componentes mais triviais para prova, como a decomposição de uma igualdade de sequência a separa em uma igualdade de sequências junto a uma igualdade de seus tamanhos.
 \section*{Especificação do problema e explicação do método de solução}
 	
-	Nesta etapa mostraremos o desenvolvimento das provas e suas relações com a dedução natural no cálculo de Gentzen.
+	Nesta etapa mostraremos o desenvolvimento das provas e suas relações com a dedução natural no cálculo de Gentzen. Omitiremos certos passos com a finalidade de manter a prova legível, como certos comandos de $expand$, passos omitidos serão sinalizados adequadamente quando necessários, além disso, fórmulas escondidas com a mesma finalidade estarão representadas como $\Gamma$ do lado esquedo do sequente e como $\Delta$ do lado direito do sequente.
 
 	\subsection{Questão 1}
 	
-	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $is.sorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, x \ : finseq)$, $l$ abrevia $length(x \ : finseq)$.
+	Usaremos algumas abreviaçõe com o intuito  de diminuir os tamanhos das provas assim, $s?$ abrevia $is.sorted?(x \ : finseq)$, $i$ abrevia $insertion(x \ : nat, y \ : finseq)$, $l$ abrevia $length(x \ : finseq)$, $s$ abrevia $seq(.)$, $af$ abrevia $addfirst(x \ : nat , y \ : finseq)$.
 	
 		\begin{prooftree}\label{pr:1.1}
 			\AXC{$\nabla_1$}
@@ -63,23 +63,23 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 			\UIC{$\Rightarrow \forall_{s, x} \ s?(s) \rightarrow s?(i(x, s))$}
 		\end{prooftree}
 		
-	Onde $\Delta_1$ foi usado para abreviar a igualdade usada por ($R_{=}$)
+	Onde $\Delta_1$ foi usado para abreviar a igualdade usada por ($R_{=}$), aplicada pelo comando $expand$, as regras de ($R_\forall$) e ($R_\rightarrow$) foram aplicadas com o comando $skeep$.
 	
 	\begin{equation}
 		\begin{split}
-		\Delta_1 = IF \ l(x_1) = 0 \ THEN s?(addf(x,x_1)) \qquad \qquad\\
-		ELSE \ IF \ x \le f(x_1) \ THEN \ s?(addf(x,x_1)) \ \ \\
-		ELSE \ s?(addf(f(x_1), i(x,rest(x_1))) \qquad \qquad
+		\Delta_1 = IF \ l(x_1) = 0 \ THEN s?(af(x,x_1)) \qquad \qquad\\
+		ELSE \ IF \ x \le f(x_1) \ THEN \ s?(af(x,x_1)) \ \ \\
+		ELSE \ s?(af(f(x_1), i(x,rest(x_1))) \qquad \qquad
 		\end{split}
 	\end{equation}
 	
-	Agora podemos explicar o uso do comando $prop$ em nossa prova para obtermos os ramos $\nabla_{1,2,3}$, a estrutura de $if, then \ else$ pode ser interpretada como uma série de implicações, como no exemplo de $\Delta_1$, temos, $l(x_1) = 0 \rightarrow s?(addf(x,x_1))$, como uma primeira implicação, $(\neg{(l(x_1) = 0)} \wedge x \le f(x_1) )\rightarrow s?(addf(x,x_1))$, e temos uma terceira implicação que correspode ao caso que nenhuma das duas condições dos $if's$ são verdadeiras,  $(\neg{((l(x_1) = 0) \wedge x \le f(x_1))} )\rightarrow s?(addf(x,x_1))$ .
+	Agora podemos explicar o uso do comando $prop$ em nossa prova para obtermos os ramos $\nabla_{1,2,3}$, a estrutura de $if, then \ else$ pode ser interpretada como uma série de implicações, como no exemplo de $\Delta_1$, temos, $l(x_1) = 0 \rightarrow s?(af(x,x_1))$, como uma primeira implicação, $(\neg{(l(x_1) = 0)} \wedge x \le f(x_1) )\rightarrow s?(af(x,x_1))$, e temos uma terceira implicação que correspode ao caso que nenhuma das duas condições dos $if's$ são verdadeiras,  $(\neg{((l(x_1) = 0) \wedge x \le f(x_1))} )\rightarrow s?(af(x,x_1))$ .
 	
 	Utilizando o comando $prop$ nessa estrutura obtemos 3 ramos, prove nientes da utilização de comando como $flatten$, $split$, assim expandindo o $prop$ utilizado acima podemos ver as seguintes provas:
 	
 	\begin{prooftree}\label{pr:n1}
 		\AXC{$\nabla'_1$}
-		\UIC{$\Gamma , l(x_1)=0, s?(x_1)\Rightarrow s?(addf(x,x_1))$}
+		\UIC{$\Gamma , l(x_1)=0, s?(x_1)\Rightarrow s?(af(x,x_1))$}
 		\AXC{$\nabla_2$}
 		\AXC{$\nabla_3$}
 		\RightLabel{$(prop)$}
@@ -89,7 +89,7 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 	\begin{prooftree}\label{pr:n2}
 		\AXC{$\nabla_1$}
 		\AXC{$\nabla'_2$}
-		\UIC{$\Gamma , x \le f(x_1), s?(x_1)\Rightarrow s?(addf(x,x_1), \ l(x_1)=0$}
+		\UIC{$\Gamma , x \le f(x_1), s?(x_1)\Rightarrow s?(af(x,x_1)), \ l(x_1)=0$}
 		\AXC{$\nabla_3$}
 		\RightLabel{$(prop)$}
 		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
@@ -99,14 +99,31 @@ Já a questão 4, {\textit {fs\textunderscore insertionsort\textunderscore is\text
 		\AXC{$\nabla_1$}
 		\AXC{$\nabla_2$}
 		\AXC{$\nabla'_3$}
-		\UIC{$\Gamma, s?(x_1)\Rightarrow s?(addf(x,x_1), \ l(x_1)=0, x \le f(x_1)$}
+		\UIC{$\Gamma, s?(x_1)\Rightarrow s?(af(x,x_1)), \ l(x_1)=0, x \le f(x_1)$}
 		\RightLabel{$(prop)$}
 		\TIC{$\Gamma ,s?(x_1) \Rightarrow \Delta_1$}
 	\end{prooftree}
 	
-	Assim, isso nos dá 3 objetivos para provar, o primeiro representado por $\nabla'_1$, onde queremos provar que para uma sequência $x_1$ de tamanho 0, vazia, a adição de um natural x em uma lista vazia resultan em uma lista ordenada, no caso a lista resultante tera apenas um elemento, estando ordenada, uma serie de $expand$, $(R_=)$ e $(L_=)$ no cáculo de Gentzen .
+	Assim, isso nos dá 3 objetivos para provar, o primeiro representado por $\nabla'_1$, onde queremos provar que para uma sequência $x_1$ de tamanho 0, vazia, a adição de um natural x em uma lista vazia resultam em uma lista ordenada, no caso a lista resultante tera apenas um elemento, estando ordenada, a prova deste ramo pode ser concluída sem maiores dificuldades com os comando apresentados.
 	
+	Para o $\nabla'_2$ temos o objetivo de provar que para uma lista $x_1$ que está ordenada, com tamanho diferente de 0, a adição de um elemento menor ou igual ao primeiro elemento de $x_1$ no indíce 0 resulta em uma lista ordenada. Podemos ver que se a lista está ordenada e o elemento a ser inserido e menor ou igual ao primeiro de $x_1$ adicioná-lo na primeira posição mantém a ordenação.
 	
+	\begin{prooftree}
+		\AXC{$\nabla_4$}
+		\UIC{$\Gamma \Rightarrow  k=0, \Delta $}
+		\AXC{$\nabla_5$}
+		\UIC{$\Gamma, k=0 \Rightarrow  \Delta $}
+		\RightLabel{$(Cut)$}
+		\BIC{$\Gamma ,\forall_k k \le l(x_1)-2 \rightarrow x_1.s(k) \le x_1.s(k+1)\Rightarrow af(x,x_1).s(k) \le af(x,x_1).s(k+1), \Delta $}
+		\UIC{$\vdots$}
+		\UIC{$\Gamma , x \le f(x_1), s?(x_1)\Rightarrow s?(af(x,x_1)), \ l(x_1)=0$}
+	\end{prooftree}
+	
+	Interessante desta prova é a utilização da regra de $Cut$, no caso utilizamos $k=0$, assim teremos um ramo provado por $\nabla_5$ que indica que o valor de $k$ é 0 oque nos dá realizando expansões que o primeiro elemento, $af(x,x_1).s(0) \le af(x,x_1).s(1)$, expandindo temos $x \le x_1.s(0)$ do lado direito do sequente, e temos exatamente isso do lado esquerdo também, dentro do $\Gamma$, assim fechamos este ramo.
+	
+	\begin{equation}
+		\Gamma, x \le x_1.s(0) \Rightarrow x \le x_1.s(0), \Delta \quad (Ax)
+	\end{equation}
 	
 \section*{Descrição da formalização}
 
